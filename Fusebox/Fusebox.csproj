@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B185468E-1755-4872-888D-12D7AC148232}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Fusebox</RootNamespace>
+    <AssemblyName>Fusebox</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp ${TargetFile} /home/realgecko/Development/KSP/GameData/${ProjectName}/Plugins" />
+        <Command type="AfterBuild" command="cp ${TargetFile} ${SolutionDir}/GameData/${ProjectName}/Plugins" />
+        <Command type="Execute" command="/usr/bin/wine /home/realgecko/Development/KSP/KSP_x64.exe" workingdir="/home/realgecko/Development/KSP/" />
+      </CustomCommands>
+    </CustomCommands>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\KSP\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\KSP\KSP_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>..\..\KSP\KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="AviationLights">
+      <HintPath>..\..\KSP\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
+    </Reference>
+    <Reference Include="NearFutureElectrical">
+      <HintPath>..\..\KSP\GameData\NearFutureElectrical\Plugins\NearFutureElectrical.dll</HintPath>
+    </Reference>
+    <Reference Include="NearFutureSolar">
+      <HintPath>..\..\KSP\GameData\NearFutureSolar\Plugins\NearFutureSolar.dll</HintPath>
+    </Reference>
+    <Reference Include="KAS">
+      <HintPath>..\..\KSP\GameData\KAS\Plugins\KAS.dll</HintPath>
+    </Reference>
+    <Reference Include="RemoteTech">
+      <HintPath>..\..\KSP\GameData\RemoteTech\Plugins\RemoteTech.dll</HintPath>
+    </Reference>
+    <Reference Include="SCANsat">
+      <HintPath>..\..\KSP\GameData\SCANsat\Plugins\SCANsat.dll</HintPath>
+    </Reference>
+    <Reference Include="TacLifeSupport">
+      <HintPath>..\..\KSP\GameData\ThunderAerospace\TacLifeSupport\Plugins\TacLifeSupport.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Fusebox.cs" />
+    <Compile Include="ToolbarButtonWrapper.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>
