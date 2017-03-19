@@ -11,3 +11,7 @@ ChangeLog
 	In Flight, polling only gets the values from the TrackResource class
 	Added Log.cs for logging
 	Added version file
+
+0.1.1
+	adjusted location of dropdown for picking the body for Darkness time
+	Fixed stock toolbar code to update icons in real time, same as the Blizzy toolbar does

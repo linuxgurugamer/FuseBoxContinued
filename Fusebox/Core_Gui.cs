@@ -454,7 +454,7 @@ namespace Ratzap
             // Draw the body select button
             if (GUILayout.Button("Pick"))
             {
-                popupWin.x = drkWin.x;
+                popupWin.x = drkWin.x - 120;
                 popupWin.y = drkWin.y + 120;
                 pickBod = !pickBod;
             }

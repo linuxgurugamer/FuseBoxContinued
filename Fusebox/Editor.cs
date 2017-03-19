@@ -51,7 +51,7 @@ namespace Ratzap
             if (doOneFrame)
             {
                 // updateAmValues();
-                if (ToolbarManager.ToolbarAvailable)
+                //if (ToolbarManager.ToolbarAvailable)
                     setTBIcon();
                 doOneFrame = !doOneFrame;
             }

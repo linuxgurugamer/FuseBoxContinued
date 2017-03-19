@@ -1119,6 +1119,8 @@ namespace Ratzap
         
         protected void setTBIcon()
         {
+            string newIconName = "";
+
             double am_perc = (am_cur / am_max) * 100;
             int segs = 1;
 
@@ -1135,20 +1137,20 @@ namespace Ratzap
                 {
                     if (am_perc < 0.1)
                     {
-                        this.ToolbarButton.TexturePath = this.FB_TB_empty_P;
+                        newIconName = this.FB_TB_empty_P;
                     }
                     else
                     {
                         switch (segs)
                         {
                             case 1:
-                                this.ToolbarButton.TexturePath = this.FB_TB_dr1b_P;
+                                newIconName = this.FB_TB_dr1b_P;
                                 break;
                             case 2:
-                                this.ToolbarButton.TexturePath = this.FB_TB_dr2b_P;
+                                newIconName = this.FB_TB_dr2b_P;
                                 break;
                             case 3:
-                                this.ToolbarButton.TexturePath = this.FB_TB_dr3b_P;
+                                newIconName = this.FB_TB_dr3b_P;
                                 break;
                         }
                     }
@@ -1156,7 +1158,7 @@ namespace Ratzap
                 else
                 {
                     if (frmCount == 75 && showCharge)
-                        this.ToolbarButton.TexturePath = this.FB_TB_drain_P;
+                        newIconName = this.FB_TB_drain_P;
                     if (frmCount == 150)
                     {
                         frmCount = 1;
@@ -1170,20 +1172,20 @@ namespace Ratzap
                 {
                     if (am_perc < 0.1)
                     {
-                        this.ToolbarButton.TexturePath = this.FB_TB_empty_P;
+                        newIconName = this.FB_TB_empty_P;
                     }
                     else
                     {
                         switch (segs)
                         {
                             case 1:
-                                this.ToolbarButton.TexturePath = this.FB_TB_pos1b_P;
+                                newIconName = this.FB_TB_pos1b_P;
                                 break;
                             case 2:
-                                this.ToolbarButton.TexturePath = this.FB_TB_pos2b_P;
+                                newIconName = this.FB_TB_pos2b_P;
                                 break;
                             case 3:
-                                this.ToolbarButton.TexturePath = this.FB_TB_full_P;
+                                newIconName = this.FB_TB_full_P;
                                 break;
                         }
                     }
@@ -1191,12 +1193,19 @@ namespace Ratzap
                 else
                 {
                     if ((frmCount == 75) && (am_perc < 99.0) && showCharge)
-                        this.ToolbarButton.TexturePath = this.FB_TB_posgen_P;
+                        newIconName = this.FB_TB_posgen_P;
                     if (frmCount == 150)
                     {
                         frmCount = 1;
                     }
                 }
+            }
+            if (newIconName != "")
+            {
+                if (ToolbarManager.ToolbarAvailable)
+                    this.ToolbarButton.TexturePath = newIconName;
+                else
+                    appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName, false));
             }
         }
 

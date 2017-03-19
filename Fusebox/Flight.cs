@@ -57,7 +57,7 @@ namespace Ratzap
                 checkWinBounds();
 
                
-                if (ToolbarManager.ToolbarAvailable)
+                //if (ToolbarManager.ToolbarAvailable)
                     setTBIcon();
             }
             
