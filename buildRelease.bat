@@ -1,5 +1,5 @@
 
-rem @echo off
+@echo off
 
 copy /Y "FuseBox\bin\Release\FuseBox.dll" "GameData\FuseBox\Plugins"
 copy /Y FuseBoxContinued.version GameData\FuseBox
