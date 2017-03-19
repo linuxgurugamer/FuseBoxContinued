@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{B185468E-1755-4872-888D-12D7AC148232}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Fusebox</RootNamespace>
+    <RootNamespace>Ratzap</RootNamespace>
     <AssemblyName>Fusebox</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
@@ -34,42 +34,83 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
     <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\KSP\KSP_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\KSP\KSP_Data\Managed\UnityEngine.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\KSP\KSP_Data\Managed\UnityEngine.UI.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass">
+      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="AviationLights">
-      <HintPath>..\..\KSP\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
-    </Reference>
-    <Reference Include="NearFutureElectrical">
-      <HintPath>..\..\KSP\GameData\NearFutureElectrical\Plugins\NearFutureElectrical.dll</HintPath>
-    </Reference>
-    <Reference Include="NearFutureSolar">
-      <HintPath>..\..\KSP\GameData\NearFutureSolar\Plugins\NearFutureSolar.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
     </Reference>
     <Reference Include="KAS">
-      <HintPath>..\..\KSP\GameData\KAS\Plugins\KAS.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\GameData\KAS\Plugins\KAS.dll</HintPath>
+    </Reference>
+    <Reference Include="NearFutureElectrical">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\NearFutureElectrical\Plugins\NearFutureElectrical.dll</HintPath>
+    </Reference>
+    <Reference Include="NearFutureSolar">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\NearFutureSolar\Plugins\NearFutureSolar.dll</HintPath>
     </Reference>
     <Reference Include="RemoteTech">
-      <HintPath>..\..\KSP\GameData\RemoteTech\Plugins\RemoteTech.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\GameData\RemoteTech\Plugins\RemoteTech.dll</HintPath>
     </Reference>
     <Reference Include="SCANsat">
-      <HintPath>..\..\KSP\GameData\SCANsat\Plugins\SCANsat.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\GameData\SCANsat\Plugins\SCANsat.dll</HintPath>
+    </Reference>
+    <Reference Include="System">
+      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\System.dll</HintPath>
     </Reference>
     <Reference Include="TacLifeSupport">
-      <HintPath>..\..\KSP\GameData\ThunderAerospace\TacLifeSupport\Plugins\TacLifeSupport.dll</HintPath>
+      <HintPath>R:\KSP_1.2.2_dev\GameData\ThunderAerospace\TacLifeSupport\Plugins\TacLifeSupport.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine">
+      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyVersion.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AssemblyVersion.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Core.cs" />
+    <Compile Include="Core_Gui.cs" />
+    <Compile Include="Editor.cs" />
+    <Compile Include="FuseBoxMonitor.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="PartReplacement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Fusebox.cs" />
-    <Compile Include="ToolbarButtonWrapper.cs" />
+    <Compile Include="Flight.cs" />
+    <Compile Include="ToolbarWrapper.cs" />
+    <Compile Include="TrackResource.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AssemblyVersion.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>AssemblyVersion.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>start /D D:\Users\jbb\github\FuseBoxContinued /WAIT deploy.bat
+
+if $(ConfigurationName) == Release (
+start /D D:\Users\jbb\github\FuseBoxContinued /WAIT buildRelease.bat
+)
+</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>set textTemplatingPath="%25CommonProgramFiles(x86)%25\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe"
+
+		if %25textTemplatingPath%25=="\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe" set textTemplatingPath="%25CommonProgramFiles%25\Microsoft Shared\TextTemplating\$(VisualStudioVersion)\texttransform.exe"
+
+		%25textTemplatingPath%25 "$(ProjectDir)AssemblyVersion.tt"</PreBuildEvent>
+  </PropertyGroup>
 </Project>

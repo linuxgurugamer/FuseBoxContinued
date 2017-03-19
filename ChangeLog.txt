@@ -1,0 +1,13 @@
+Fuse Box Continued 
+
+ChangeLog
+
+0.1.0
+	Initial release for 1.2
+	Reorganized code, moving into different files
+	Added TrackResource.cs and PartReplacement.cs from the old Virgin Kalactic
+	In flight resources are monitored using actual values.  
+	Replaced 3x/sec polling of entire vessel with events in Editor
+	In Flight, polling only gets the values from the TrackResource class
+	Added Log.cs for logging
+	Added version file

@@ -1,4 +1,4 @@
-/*
+﻿/*
 Copyright (c) 2013-2016, Maik Schreiber
 All rights reserved.
 
@@ -30,7 +30,8 @@ using UnityEngine;
 
 
 // TODO: Change to your plugin's namespace here.
-namespace Ratzap {
+namespace Ratzap
+{
 
 
 

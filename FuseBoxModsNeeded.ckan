@@ -1,0 +1,59 @@
+{
+	"kind": "metapackage",
+	"abstract": "A list of modules installed on the default KSP instance",
+	"name": "installed-default",
+	"license": "unknown",
+	"version": "2017.03.17.09.50.58",
+	"identifier": "installed-default",
+	"spec_version": "v1.6",
+	"depends": [
+		{
+			"name": "KSPDev-LogConsole",
+			"version": "1:0.13.1"
+		},
+		{
+			"name": "EditorExtensionsRedux",
+			"version": "3.3.11.1"
+		},
+		{
+			"name": "ModuleManager",
+			"version": "2.7.5"
+		},
+		{
+			"name": "AviationLights",
+			"version": "v.3.12"
+		},
+		{
+			"name": "KAS",
+			"version": "0.6.2.0"
+		},
+		{
+			"name": "NearFutureElectrical-Core",
+			"version": "0.8.6"
+		},
+		{
+			"name": "NearFutureSolar-Core",
+			"version": "0.7.2"
+		},
+		{
+			"name": "RemoteTech",
+			"version": "v1.8.6"
+		},
+		{
+			"name": "SCANsat",
+			"version": "v16.11"
+		},
+		{
+			"name": "TACLS-Config-Stock",
+			"version": "v0.12.9"
+		},
+		{
+			"name": "TACLS",
+			"version": "v0.12.9"
+		},
+		{
+			"name": "CommunityResourcePack",
+			"version": "0.6.6.0"
+		}
+	]
+}
