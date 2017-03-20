@@ -43,8 +43,14 @@
     <Reference Include="AviationLights">
       <HintPath>R:\KSP_1.2.2_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
     </Reference>
+    <Reference Include="DeepFreeze">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\REPOSoftTech\DeepFreeze\Plugins\DeepFreeze.dll</HintPath>
+    </Reference>
     <Reference Include="KAS">
       <HintPath>R:\KSP_1.2.2_dev\GameData\KAS\Plugins\KAS.dll</HintPath>
+    </Reference>
+    <Reference Include="kOS">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\kOS\Plugins\kOS.dll</HintPath>
     </Reference>
     <Reference Include="NearFutureElectrical">
       <HintPath>R:\KSP_1.2.2_dev\GameData\NearFutureElectrical\Plugins\NearFutureElectrical.dll</HintPath>

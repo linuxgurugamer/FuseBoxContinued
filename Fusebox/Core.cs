@@ -54,6 +54,7 @@ namespace Ratzap
         protected bool TelPresent = false;
         protected bool TACLPresent = false;
         protected bool kOSPresent = false;
+        protected bool DeepFreezePresent = false;
         //		protected bool BioPresent = false;
         protected bool AntRPresent = false;
         //		protected bool KarPresent = false;
@@ -65,10 +66,10 @@ namespace Ratzap
 
         protected bool[] typeArr = new bool[20];
 
-        public  enum DisplayMode: int { none = -1, inFlight = 0, editor = 1};
-        protected static  DisplayMode mode = DisplayMode.none;
+        public enum DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
+        protected static DisplayMode mode = DisplayMode.none;
 
-       // protected static int mode = -1;  // Display mode, currently  0 for In-Flight, 1 for Editor, -1 to hide
+        // protected static int mode = -1;  // Display mode, currently  0 for In-Flight, 1 for Editor, -1 to hide
 
         protected static bool haltWarp = true;
         protected static bool haltTriggered = false;
@@ -82,8 +83,8 @@ namespace Ratzap
         public static double am_cur = 0;    // Bat cur
         public static double am_prod = 0;   // Gen
         public static double am_use = 0;    // Drain
-       //ublic static double am_prod2 = 0;   // Gen
-       //ublic static double am_use2 = 0;    // Drain
+                                            //ublic static double am_prod2 = 0;   // Gen
+                                            //ublic static double am_use2 = 0;    // Drain
 
         public static double timeIntervalMeasured = 0;
         public static double lastTimeCheck = 0;
@@ -129,7 +130,7 @@ namespace Ratzap
         protected bool pickShow = false;
 
 
-        protected  List<Part> parts;
+        protected List<Part> parts;
         protected PartResourceDefinition definition;
 
         public void Awake()
@@ -158,6 +159,7 @@ namespace Ratzap
             TACLPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "TacLifeSupport");
             AntRPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AntennaRange");
             kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
+            DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
             //			BDSMPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "BTSM");
 
             //			Debug.Log("FB - Checked for mods");
@@ -246,10 +248,12 @@ namespace Ratzap
             else if (appLauncherButton == null)
             {
                 appLauncherButton = ApplicationLauncher.Instance.AddModApplication(
-                    delegate {
+                    delegate
+                    {
                         uiActive = true;
                     },
-                    delegate {
+                    delegate
+                    {
                         uiActive = false;
                     },
                     null,
@@ -334,18 +338,17 @@ namespace Ratzap
 
             if (EditorLogic.fetch != null) // Check if in editor
                 try
-            {
-                parts = EditorLogic.fetch.ship.parts; // Saw a comment by Sarbian, I don't need a sorted list anyway.
-                if (parts == null)
-                    return;
-            }
-            catch (NullReferenceException e)
-            {
-                if (e.Source != null)
-                    return;
-            }
+                {
+                    parts = EditorLogic.fetch.ship.parts; // Saw a comment by Sarbian, I don't need a sorted list anyway.
+                    if (parts == null)
+                        return;
+                }
+                catch (NullReferenceException e)
+                {
+                    if (e.Source != null)
+                        return;
+                }
 
-            Log.Info("updateAmValues 2, parts count: " + parts.Count().ToString());
             foreach (Part p in parts)
             {
                 if (!typeArr[10] && p.Modules[0].moduleName == "LaunchClamp")
@@ -508,7 +511,7 @@ namespace Ratzap
                                     if (r.id == definition.id)
                                     {
                                         if (mode == DisplayMode.editor)
-                                            am_use += r.rate * tmpRW.PitchTorque;  // rough guess for VAB
+                                            am_use += r.rate * 3; // * tmpRW.PitchTorque;  // rough guess for VAB
                                         if (mode == DisplayMode.inFlight)
                                             am_use += r.currentAmount * (tmpRW.PitchTorque + tmpRW.RollTorque + tmpRW.YawTorque);
                                     }
@@ -717,6 +720,16 @@ namespace Ratzap
                             Debug.Log("FB - Wrong kOS library version - disabled.");
                             kOSPresent = false;
                         }
+                    if (DeepFreezePresent)
+                        try
+                        {
+                            checkDF(tmpPM);
+                        }
+                        catch
+                        {
+                            Debug.Log("FB - Wrong kOS library version - disabled.");
+                            DeepFreezePresent = false;
+                        }
 
                     /*						if (BioPresent)
                                                 try
@@ -762,10 +775,10 @@ namespace Ratzap
                 timeIntervalMeasured = Planetarium.GetUniversalTime() - lastTimeCheck;
                 lastTimeCheck = Planetarium.GetUniversalTime();
                 ResourceStats rs = VesselStatsManager.Instance.Get(FlightGlobals.ActiveVessel);
-               //m_prod2 = rs.GetGeneration("ElectricCharge");
-               //m_use2 = rs.GetConsumption("ElectricCharge");
-               // Log.Info("ResourceStats.GetTotalConsumption: " + (rs.GetConsumption("ElectricCharge") / timeIntervalMeasured).ToString());
-               // Log.Info("ResourceStatsGetTotalGeneration: " + (rs.GetGeneration("ElectricCharge") / timeIntervalMeasured).ToString());
+                //m_prod2 = rs.GetGeneration("ElectricCharge");
+                //m_use2 = rs.GetConsumption("ElectricCharge");
+                // Log.Info("ResourceStats.GetTotalConsumption: " + (rs.GetConsumption("ElectricCharge") / timeIntervalMeasured).ToString());
+                // Log.Info("ResourceStatsGetTotalGeneration: " + (rs.GetGeneration("ElectricCharge") / timeIntervalMeasured).ToString());
                 rs.Reset();
             }
         }
@@ -862,25 +875,40 @@ namespace Ratzap
 
         protected void checkSCANsat(PartModule tmpPM)
         {
-            //			switch (tmpPM.moduleName)
-            //			{
-            //			case "SCANsat":
-            //				if (typeArr[13])
-            //				{
-            //					global::SCANsat.SCAN_PartModules.SCANsat tmpSS = (global::SCANsat.SCAN_PartModules.SCANsat) tmpPM;
-            //					if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (tmpSS.power > 0.0 && tmpSS.scanningNow())))
-            //						am_use += tmpSS.power;
-            //				}
-            //				break;
-            //			case "ModuleSCANresourceScanner":
-            //				if (typeArr[13])
-            //				{
-            //					global::SCANsat.SCAN_PartModules.ModuleSCANresourceScanner tmpSS = (global::SCANsat.SCAN_PartModules.ModuleSCANresourceScanner) tmpPM;
-            //					if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (tmpSS.power > 0.0 && tmpSS.scanningNow())))
-            //						am_use += tmpSS.power;
-            //				}
-            //				break;
-            //			}
+            switch (tmpPM.moduleName)
+            {
+                case "SCANsat":
+                    if (typeArr[13])
+                    {
+                        global::SCANsat.SCAN_PartModules.SCANsat tmpSS = (global::SCANsat.SCAN_PartModules.SCANsat)tmpPM;
+
+                        foreach (ModuleResource r in tmpSS.resHandler.inputResources)
+                        {
+                            if (r.id == definition.id)
+                            {
+                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow())))
+                                    am_use += r.rate;
+                            }
+                        }
+                    }
+                    break;
+                case "ModuleSCANresourceScanner":
+                    if (typeArr[13])
+                    {
+                        global::SCANsat.SCAN_PartModules.ModuleSCANresourceScanner tmpSS = (global::SCANsat.SCAN_PartModules.ModuleSCANresourceScanner)tmpPM;
+                        foreach (ModuleResource r in tmpSS.resHandler.inputResources)
+                        {
+                            if (r.id == definition.id)
+                            {
+                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow())))
+                                    am_use += r.rate;
+                            }
+                        }
+                        //if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (tmpSS.power > 0.0 && tmpSS.scanningNow())))
+                        //    am_use += tmpSS.power;
+                    }
+                    break;
+            }
         }
 
         protected void checkTel(PartModule tmpPM)
@@ -901,14 +929,15 @@ namespace Ratzap
 
         protected void checkTACL()
         {
-            //			if (typeArr[14])
-            //			{
-            //				global::Tac.TacLifeSupport tmpTLS = Tac.TacLifeSupport.Instance;
-            //				if (tmpTLS.gameSettings.Enabled) {
-            //					am_use += tmpTLS.globalSettings.BaseElectricityConsumptionRate;
-            //				}
-            //				// Add ElectricityConsumptionRate * crew member later
-            //			}
+            if (typeArr[14])
+            {
+                global::Tac.TacLifeSupport tmpTLS = Tac.TacLifeSupport.Instance;
+                if (tmpTLS.Enabled)
+                {
+                    am_use += tmpTLS.BaseElectricityConsumptionRate;
+                }
+                // Add ElectricityConsumptionRate * crew member later
+            }
         }
 
         protected void checkAntR(PartModule tmpPM)
@@ -928,18 +957,32 @@ namespace Ratzap
 
         protected void checkkOS(PartModule tmpPM)
         {
-            //			switch (tmpPM.moduleName)
-            //			{
-            //			case "kOSProcessor":
-            //				if (typeArr[5])
-            //				{
-            //					global::kOS.Module.kOSProcessor tmpkOS = (global::kOS.Module.kOSProcessor) tmpPM;
-            //					am_use += tmpkOS.RequiredPower;
-            //				}
-            //				break;
-            //			}
+            switch (tmpPM.moduleName)
+            {
+                case "kOSProcessor":
+                    if (typeArr[5])
+                    {
+                        global::kOS.Module.kOSProcessor tmpkOS = (global::kOS.Module.kOSProcessor)tmpPM;
+                        am_use += tmpkOS.RequiredPower;
+                    }
+                    break;
+            }
         }
+        protected void checkDF(PartModule tmpPM)
+        {
 
+            switch (tmpPM.moduleName)
+            {
+                case "DeepFreezer":
+                    if (typeArr[17])
+                    {
+                       DF.DeepFreezer tmpDeepFreezer = (DF.DeepFreezer) tmpPM;
+   
+                       am_use += tmpDeepFreezer.ChargeRequired;
+                    }
+                    break;
+            }
+        }
         /*		protected void checkBio(PartModule tmpPM)
                 {
                     switch (tmpPM.moduleName)
@@ -1020,7 +1063,7 @@ namespace Ratzap
         protected void checkMode(DisplayMode curMode)
         {
             String vers;
-            
+
             // Check if the mode has changed
             if (mode != curMode)
             {
@@ -1033,7 +1076,7 @@ namespace Ratzap
                 shrinkMain = true;  // redraw minimal on scene change
 
                 // Load the saved position of the new mode
-                if (mode!= DisplayMode.none)
+                if (mode != DisplayMode.none)
                 {
                     FBconf.load();
                     vers = FBconf.GetValue<String>("version", VERSION);
@@ -1115,8 +1158,8 @@ namespace Ratzap
             saveConfig();
         }
 
-       
-        
+
+
         protected void setTBIcon()
         {
             string newIconName = "";
@@ -1209,7 +1252,7 @@ namespace Ratzap
             }
         }
 
-        
+
         protected TimeSpan ConvToKerb(TimeSpan span)
         {
             const int dayMult = 4;
@@ -1319,5 +1362,5 @@ namespace Ratzap
         }
     }
 
-    
+
 }

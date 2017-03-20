@@ -70,7 +70,7 @@ namespace Ratzap
             }
         }
 
-        //        [ConditionalAttribute("DEBUG")]
+        [ConditionalAttribute("DEBUG")]
         public static void Info(String msg)
         {
 

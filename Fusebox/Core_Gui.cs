@@ -15,7 +15,7 @@ namespace Ratzap
         public void Update()
         {
             sumDelta += Time.deltaTime;  // Only update FB 3 times a second max.
-            
+
             if (sumDelta > 0.33)
             {
                 doOneFrame = true;
@@ -153,7 +153,7 @@ namespace Ratzap
                 //GUILayout.Label(string.Concat("Gen2: ", (am_prod2 / timeIntervalMeasured).ToString(precString)), FBOKStyle, GUILayout.ExpandWidth(true));
                 //GUILayout.Label(string.Concat("Drain2: ", (am_use2 / timeIntervalMeasured).ToString(precString)), FBDrainStyle, GUILayout.ExpandWidth(true));
 
-                
+
 
                 if (drainTime.Days > 365)
                     years = (int)drainTime.Days / 365;
@@ -232,7 +232,7 @@ namespace Ratzap
         bool[] typeArrCopy;
         private void drawFilters(int windowID)
         {
-            typeArrCopy = (bool[]) typeArr.Clone();
+            typeArrCopy = (bool[])typeArr.Clone();
 
             GUIStyle filterOff = new GUIStyle(GUI.skin.toggle);
             filterOff.normal.textColor = filterOff.onNormal.textColor = BadCol;
@@ -261,12 +261,16 @@ namespace Ratzap
                 typeArr[12] = GUILayout.Toggle(typeArr[12], "Near Future", typeArr[12] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             if (ScSPresent)
                 typeArr[13] = GUILayout.Toggle(typeArr[13], "SCANsat", typeArr[13] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-            /*			if (TACLPresent)
-                            typeArr[14] = GUILayout.Toggle(typeArr[14], "TAC Life Sup", typeArr[14] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
-                        if (KISPPresent)
-                            typeArr[15] = GUILayout.Toggle(typeArr[15], "Interstellar", typeArr[15] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true)); */
+            if (TACLPresent)
+                typeArr[14] = GUILayout.Toggle(typeArr[14], "TAC Life Sup", typeArr[14] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            //            if (KISPPresent)
+            //                typeArr[15] = GUILayout.Toggle(typeArr[15], "Interstellar", typeArr[15] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true)); 
             if (KASPresent)
                 typeArr[16] = GUILayout.Toggle(typeArr[16], "KAS", typeArr[16] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+            			if (DeepFreezePresent)
+            				typeArr[17] = GUILayout.Toggle(typeArr[17], "Deep Freeze", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
             //			if (KarPresent)
             //				typeArr[18] = GUILayout.Toggle(typeArr[18], "Karbonite", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             bool b = false;
@@ -308,7 +312,7 @@ namespace Ratzap
                     filterList.Add("ModuleDataTransmitter");
                     filterList.Add("ModuleLimitedDataTransmitter");
                     // filterList.Add("TelemachusPowerDrain");
-                    // filterList.Add("kOSProcessor");
+                    filterList.Add("kOSProcessor");
                 }
                 if (!typeArr[6]) filterList.Add("ModuleReactionWheel");
                 if (!typeArr[7])
@@ -329,34 +333,37 @@ namespace Ratzap
                     filterList.Add("ModuleRadioisotopeGenerator");
                     filterList.Add("ModuleCurvedSolarPanel");
                 }
-                //if (!typeArr[13])
-                //{
-                //    filterList.Add("SCANsat");
-                //    filterList.Add("ModuleSCANresourceScanner");
-                //}
-                //if (!typeArr[14]) filterList.Add("");
+                if (!typeArr[13])
+                {
+                    filterList.Add("SCANsat");
+                    filterList.Add("ModuleSCANresourceScanner");
+                }
+                if (!typeArr[14]) filterList.Add("TacGenericConverter");
                 //if (!typeArr[15]) filterList.Add("");
                 if (!typeArr[16])
                 {
                     filterList.Add("KASModuleWinch");
                     filterList.Add("KASModuleMagnet");
                 }
-                //if (!typeArr[17]) filterList.Add("");
+                if (!typeArr[17]) filterList.Add("DeepFreezer");
                 //if (!typeArr[18]) filterList.Add("USI_ResourceConverter");
 
                 if (FlightGlobals.fetch != null && FlightGlobals.ActiveVessel != null)  // Check if in flight
                 {
-                   // foreach (var s in filterList)
-                   //     Log.Info("Filtering: " + s);
-                    
+                    // foreach (var s in filterList)
+                    //     Log.Info("Filtering: " + s);
+
                     VesselStatsManager.Instance.SetFilterList(filterList);
                 }
+
             }
-            
+
             if (mode == DisplayMode.editor)
             {
                 GUILayout.Label(String.Format("Engine thr {0:P0}", currThrottle));
                 currThrottle = GUILayout.HorizontalSlider(currThrottle, 0.0F, 1.0F);
+                if (b)
+                    updateAmValues();
             }
 
             if (GUILayout.Button("Close"))

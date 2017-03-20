@@ -62,11 +62,14 @@ namespace PartReplacement
 		
 		public override double RequestResource (string resourceName, double demand, ResourceFlowMode flowMode)
 		{
-			// Pass transaction data to designated handler class
-			double accepted = this.OnResourceRequested.Invoke (resourceName, demand, flowMode);
+            // Pass transaction data to designated handler class
+            double accepted = 0;
+            if (OnResourceRequested != null)
+                accepted = this.OnResourceRequested.Invoke (resourceName, demand, flowMode);
 			
 			// Send results of transaction to any classes that have asked to be told about it
-			this.OnRequestResource.Invoke(resourceName, demand, flowMode, accepted);
+            if (OnRequestResource != null)
+    			this.OnRequestResource.Invoke(resourceName, demand, flowMode, accepted);
 			
 			// Complete transaction by returning the amount of resource that was actually consumed
 			return accepted;
