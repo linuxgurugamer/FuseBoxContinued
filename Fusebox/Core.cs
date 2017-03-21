@@ -146,6 +146,10 @@ namespace Ratzap
             {
                 typeArr[i] = true;
             }
+            if (AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AmpYear"))
+            {
+                Log.Info("AmpYear detected, disabling FuseBox");
+            }
 
             // Find out which mods are present
 

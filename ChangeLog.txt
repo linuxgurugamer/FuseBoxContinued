@@ -27,5 +27,19 @@ ChangeLog
 	Fixed log spam from OnGUI
 	Fixed nullref exception from PartReplacement
 
+0.1.4
+	Added detection of AmpYear and a dialog warning to remove one of them
+	Added 3 parts,using MM script:
+		z-1kReserveBattery
+		z-100ReserveBattery
+		z-400ReserveBattery
+		
+		These parts are not visible in the VAB, they are here to allow saves to work when switching from AmpYear to FuseBox.  As such, their internal
+		names match those of the parts from AmpYear.
+		Functionality is identical to a regular battery of the same size
+		
+	Added do-nothing modules: AYPart and AYCrewPart, to replace the modules from AmpYear.
+
+
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
