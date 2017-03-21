@@ -1,5 +1,4 @@
 
-\
 
 set H=R:\KSP_1.2.2_dev
 echo %H%

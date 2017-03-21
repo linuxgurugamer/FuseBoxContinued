@@ -14,7 +14,7 @@ namespace Ratzap
         const int ampYearWidth = 300;    // ampYear window width
         const int ampYearHeight = 200;   // ampYear window height
         Rect ampYearWin = new Rect((Screen.width - ampYearWidth) / 2, (Screen.height - ampYearHeight) / 2, ampYearWidth, ampYearHeight);  // ampYear window position and size
-        bool ampYearDetected = true;
+        bool ampYearDetected = false;
         int ampYearWINID = 2384576;
         GUIStyle window;
 

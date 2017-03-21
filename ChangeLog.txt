@@ -40,6 +40,9 @@ ChangeLog
 		
 	Added do-nothing modules: AYPart and AYCrewPart, to replace the modules from AmpYear.
 
+0.1.4.1
+	Fixed log spam when Ampyear is not installed, only at main menu
+
 
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
