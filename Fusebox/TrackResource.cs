@@ -3,9 +3,10 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using KSP;
-using PartReplacement;
+//using PartReplacement;
 using Ratzap;
 
+#if true
 //
 // This file is from the Virgin Kalactic mod
 // https://github.com/Greys0/Virgin-Kalactic
@@ -31,8 +32,35 @@ namespace TrackResource
             GameEvents.onVesselGoOffRails.Add(Add);
             GameEvents.onVesselWillDestroy.Add(Remove);
             GameEvents.onTimeWarpRateChanged.Add(Check);
-            
             GameEvents.onVesselWasModified.Add(Reload);
+
+            GameEvents.onVesselChange.Add(OnVesselChange);
+            GameEvents.onVesselLoaded.Add(OnVesselLoad);
+            GameEvents.onVesselCreate.Add(OnVesselCreate);
+            GameEvents.onVesselDestroy.Add(onVesselDestroy);
+            GameEvents.onVesselRecovered.Add(onVesselRecovered);
+        }
+
+        private void OnVesselChange(Vessel newvessel)
+        {
+            Add(newvessel);
+        }
+        private void OnVesselLoad(Vessel newvessel)
+        {
+            Add(newvessel);
+        }
+    
+        private void OnVesselCreate(Vessel Vessel)
+        {
+            Add(Vessel);
+        }
+        private void onVesselDestroy(Vessel vessel)
+        {
+            Remove(vessel);
+        }
+        private void onVesselRecovered(ProtoVessel vessel, bool quick)
+        {
+           // Remove(vessel);
         }
 
         public void onDestroy()
@@ -42,6 +70,11 @@ namespace TrackResource
             GameEvents.onTimeWarpRateChanged.Remove(Check);
             GameEvents.onVesselWasModified.Remove(Reload);
 
+            GameEvents.onVesselChange.Remove(OnVesselChange);
+            GameEvents.onVesselLoaded.Remove(OnVesselLoad);
+            GameEvents.onVesselCreate.Remove(OnVesselCreate);
+            GameEvents.onVesselDestroy.Remove(onVesselDestroy);
+            GameEvents.onVesselRecovered.Remove(onVesselRecovered);
         }
 
         void Reload(Vessel v)
@@ -53,7 +86,8 @@ namespace TrackResource
         public void SetFilterList(HashSet<string> filterList)
         {
             moduleFilterList = new HashSet<string>(filterList);
-
+            foreach (var s in moduleFilterList)
+                Log.Info("Filtering out: " + s);
             Reload(FlightGlobals.ActiveVessel);
         }
 
@@ -66,12 +100,13 @@ namespace TrackResource
         public void Add(Vessel v)
         {
             bool b;
-
+            Log.Info("Add: " + v.name);
             if (!vesselDict.ContainsKey(v))
             {
+                Log.Info("vessel being added: " + v.name);
                 ResourceStats r = VesselStatsManager.Instance.gameObject.AddComponent<ResourceStats>();
                 vesselDict.Add(v, r);
-
+                Log.Info("processing parts");
                 foreach (PartTapIn part in v.Parts)
                 {
                     b = true;
@@ -84,7 +119,10 @@ namespace TrackResource
                         }
                     }
                     if (b)
+                    {
+                        Log.Info("OnRequestResource.Add: " + part.partInfo.title);
                         part.OnRequestResource.Add(r.Sample);
+                    }
                 }
             }
         }
@@ -109,17 +147,21 @@ namespace TrackResource
 
         private void Check()
         {
-            if (TimeWarp.CurrentRateIndex == 0)
+            try
             {
-                foreach (KeyValuePair<Vessel, ResourceStats> pair in vesselDict)
+                if (TimeWarp.CurrentRateIndex == 0)
                 {
-                    if (!pair.Key.loaded)
+                    foreach (KeyValuePair<Vessel, ResourceStats> pair in vesselDict)
                     {
-                        Remove(pair.Key);
-                        Debug.Log("Vessel No Longer In Range Upon Leaving Timewarp" + pair.Key.name);
+                        if (!pair.Key.loaded)
+                        {
+                            Remove(pair.Key);
+                            Debug.Log("Vessel No Longer In Range Upon Leaving Timewarp" + pair.Key.name);
+                        }
                     }
                 }
             }
+            catch { }
         }
 
         public ResourceStats Get(Vessel v)
@@ -205,3 +247,4 @@ namespace TrackResource
     }
 }
 
+#endif

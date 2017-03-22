@@ -43,6 +43,10 @@ ChangeLog
 0.1.4.1
 	Fixed log spam when Ampyear is not installed, only at main menu
 
+0.1.5
+	Fixed issue of losing control of probes after switching away from them and then back.  This also showed up if you
+	put a probe on the launch pad, left the scene and came back
+
 
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
