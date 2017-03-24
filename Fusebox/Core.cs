@@ -268,7 +268,7 @@ namespace Ratzap
                     ApplicationLauncher.AppScenes.MAPVIEW |
                     ApplicationLauncher.AppScenes.SPH |
                     ApplicationLauncher.AppScenes.VAB,
-                    FB_TB_posgen
+                    GameDatabase.Instance.GetTexture(FB_TB_posgen_P + "-38", false)
                 );
             }
         }
@@ -1252,7 +1252,10 @@ namespace Ratzap
                 if (ToolbarManager.ToolbarAvailable)
                     this.ToolbarButton.TexturePath = newIconName;
                 else
-                    appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName, false));
+                {
+                    
+                    appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName + "-38", false));
+                }
             }
         }
 

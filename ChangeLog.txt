@@ -47,6 +47,9 @@ ChangeLog
 	Fixed issue of losing control of probes after switching away from them and then back.  This also showed up if you
 	put a probe on the launch pad, left the scene and came back
 
+0.1.6
+	Updated icons for Blizzy toolbar
+	Added icons for stock toolbar
 
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
