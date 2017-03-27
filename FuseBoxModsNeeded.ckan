@@ -3,33 +3,33 @@
 	"abstract": "A list of modules installed on the default KSP instance",
 	"name": "installed-default",
 	"license": "unknown",
-	"version": "2017.03.17.09.50.58",
+	"version": "2017.03.27.11.31.30",
 	"identifier": "installed-default",
 	"spec_version": "v1.6",
 	"depends": [
 		{
 			"name": "KSPDev-LogConsole",
-			"version": "1:0.13.1"
-		},
-		{
-			"name": "EditorExtensionsRedux",
-			"version": "3.3.11.1"
-		},
-		{
-			"name": "ModuleManager",
-			"version": "2.7.5"
+			"version": "logconsole_0.13.0"
 		},
 		{
 			"name": "AviationLights",
 			"version": "v.3.12"
 		},
 		{
+			"name": "DeepFreeze",
+			"version": "V0.23.2.0"
+		},
+		{
 			"name": "KAS",
 			"version": "0.6.2.0"
 		},
 		{
+			"name": "kOS",
+			"version": "1.0.3"
+		},
+		{
 			"name": "NearFutureElectrical-Core",
-			"version": "0.8.6"
+			"version": "0.8.3"
 		},
 		{
 			"name": "NearFutureSolar-Core",
@@ -37,19 +37,27 @@
 		},
 		{
 			"name": "RemoteTech",
-			"version": "v1.8.6"
+			"version": "v1.8.4"
 		},
 		{
 			"name": "SCANsat",
 			"version": "v16.11"
 		},
 		{
-			"name": "TACLS-Config-Stock",
-			"version": "v0.12.9"
+			"name": "TACLS",
+			"version": "v0.12.8"
 		},
 		{
-			"name": "TACLS",
-			"version": "v0.12.9"
+			"name": "TACLS-Config-Stock",
+			"version": "v0.12.8"
+		},
+		{
+			"name": "ModuleManager",
+			"version": "2.7.5"
+		},
+		{
+			"name": "REPOSoftTech-Agencies",
+			"version": "V1.4.6.0"
 		},
 		{
 			"name": "CommunityResourcePack",
@@ -57,3 +65,4 @@
 		}
 	]
 }
+

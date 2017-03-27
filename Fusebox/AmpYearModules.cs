@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Ratzap
 {
@@ -26,4 +27,12 @@ namespace Ratzap
         }
     }
 #endif
+}
+
+// Following just to avoid an annoying message in the log file
+
+namespace AY
+{
+    public class AmpYear : ScenarioModule
+    { }
 }

@@ -51,5 +51,8 @@ ChangeLog
 	Updated icons for Blizzy toolbar
 	Added icons for stock toolbar
 
+0.1.7
+	Fixed nullrefs in editor
+
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge

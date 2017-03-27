@@ -110,15 +110,15 @@ namespace Ratzap
         protected Texture2D FB_TB_posgen;
         protected Texture2D FB_TB_drain;
         protected int frmCount = 1;
-        protected string FB_TB_full_P = "Fusebox/TB_icons/3of3green";
-        protected string FB_TB_pos2b_P = "Fusebox/TB_icons/2of3green";
-        protected string FB_TB_pos1b_P = "Fusebox/TB_icons/1of3green";
-        protected string FB_TB_dr3b_P = "Fusebox/TB_icons/3of3red";
-        protected string FB_TB_dr2b_P = "Fusebox/TB_icons/2of3red";
-        protected string FB_TB_dr1b_P = "Fusebox/TB_icons/1of3red";
-        protected string FB_TB_empty_P = "Fusebox/TB_icons/emptyred";
+        protected string FB_TB_full_P =  "Fusebox/TB_icons/3of3green";
+        protected string FB_TB_pos2b_P =  "Fusebox/TB_icons/2of3green";
+        protected string FB_TB_pos1b_P =  "Fusebox/TB_icons/1of3green";
+        protected string FB_TB_dr3b_P =   "Fusebox/TB_icons/3of3red";
+        protected string FB_TB_dr2b_P =   "Fusebox/TB_icons/2of3red";
+        protected string FB_TB_dr1b_P =   "Fusebox/TB_icons/1of3red";
+        protected string FB_TB_empty_P =  "Fusebox/TB_icons/emptyred";
         protected string FB_TB_posgen_P = "Fusebox/TB_icons/posgen";
-        protected string FB_TB_drain_P = "Fusebox/TB_icons/draining";
+        protected string FB_TB_drain_P =  "Fusebox/TB_icons/draining";
 
         // Darkness calc bits
         public static List<celBody> allBodies = new List<celBody>();
@@ -779,11 +779,15 @@ namespace Ratzap
                 timeIntervalMeasured = Planetarium.GetUniversalTime() - lastTimeCheck;
                 lastTimeCheck = Planetarium.GetUniversalTime();
                 ResourceStats rs = VesselStatsManager.Instance.Get(FlightGlobals.ActiveVessel);
-                //m_prod2 = rs.GetGeneration("ElectricCharge");
-                //m_use2 = rs.GetConsumption("ElectricCharge");
-                // Log.Info("ResourceStats.GetTotalConsumption: " + (rs.GetConsumption("ElectricCharge") / timeIntervalMeasured).ToString());
-                // Log.Info("ResourceStatsGetTotalGeneration: " + (rs.GetGeneration("ElectricCharge") / timeIntervalMeasured).ToString());
-                rs.Reset();
+                if (rs != null)
+                {
+                    //m_prod2 = rs.GetGeneration("ElectricCharge");
+                    //m_use2 = rs.GetConsumption("ElectricCharge");
+                    // Log.Info("ResourceStats.GetTotalConsumption: " + (rs.GetConsumption("ElectricCharge") / timeIntervalMeasured).ToString());
+                    // Log.Info("ResourceStatsGetTotalGeneration: " + (rs.GetGeneration("ElectricCharge") / timeIntervalMeasured).ToString());
+
+                    rs.Reset();
+                }
             }
         }
         protected void checkAv(PartModule tmpPM)
@@ -1253,8 +1257,8 @@ namespace Ratzap
                     this.ToolbarButton.TexturePath = newIconName;
                 else
                 {
-                    
-                    appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName + "-38", false));
+                    if (appLauncherButton != null)
+                        appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName + "-38", false));
                 }
             }
         }

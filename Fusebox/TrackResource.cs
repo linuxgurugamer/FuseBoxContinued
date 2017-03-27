@@ -97,9 +97,11 @@ namespace TrackResource
             Reload(FlightGlobals.ActiveVessel);
         }
 
-        public void Add(Vessel v)
+        void Add(Vessel v)
         {
             bool b;
+            if (v == null)
+                return;
             Log.Info("Add: " + v.name);
             if (!vesselDict.ContainsKey(v))
             {
@@ -166,6 +168,8 @@ namespace TrackResource
 
         public ResourceStats Get(Vessel v)
         {
+            if (v == null)
+                return null;
             ResourceStats result;
             if (!vesselDict.TryGetValue(v, out result))
             {
