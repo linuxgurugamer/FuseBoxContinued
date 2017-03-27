@@ -56,7 +56,12 @@ ChangeLog
 	Added empty module to avoid AmpYear error in log
 
 0.1.8
-	Fixed reserve battery parts ot not show up in the editor
+	Fixed reserve battery parts to not show up in the editor
+
+0.1.8.1
+	Fixed issue where bodies are listed multiple times in the Dark Time list
+	Picked body now remembered
+	Initial picked body now set to homeworld
 
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge

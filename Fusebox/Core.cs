@@ -124,98 +124,107 @@ namespace Ratzap
         public static List<celBody> allBodies = new List<celBody>();
         public static string[] allBodNames;
         protected bool pickBod = false;
-        protected string pickedBod = "";
-        protected int pickedBodIdx = 3;
+        protected static string pickedBod = "";
+        protected static int pickedBodIdx = 3;
         protected int celOrbit = 100;
         protected bool pickShow = false;
 
 
         protected List<Part> parts;
-        protected PartResourceDefinition definition;
+        protected static PartResourceDefinition definition;
 
         public void Awake()
         {
         }
 
+        static bool initted = false;
         public void Start()
         {
-            // Create or load config file
-            FBconf = KSP.IO.PluginConfiguration.CreateForType<FuseBox_Core>(null);
-            FBconf.load();
-            for (int i = 0; i < typeArr.Length; i++)
+            if (!initted)
             {
-                typeArr[i] = true;
+                initted = true;
+                // Create or load config file
+                FBconf = KSP.IO.PluginConfiguration.CreateForType<FuseBox_Core>(null);
+                FBconf.load();
+                for (int i = 0; i < typeArr.Length; i++)
+                {
+                    typeArr[i] = true;
+                }
+                if (AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AmpYear"))
+                {
+                    Log.Info("AmpYear detected, disabling FuseBox");
+                }
+
+                // Find out which mods are present
+
+                ALPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AviationLights");
+                NFEPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureElectrical");
+                NFSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureSolar");
+                KASPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KAS");
+                RT2Present = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "RemoteTech");
+                ScSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SCANsat");
+                TelPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "Telemachus");
+                TACLPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "TacLifeSupport");
+                AntRPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AntennaRange");
+                kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
+                DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
+                //			BDSMPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "BTSM");
+
+                //			Debug.Log("FB - Checked for mods");
+                //			if (ALPresent)
+                //				Debug.Log("FB - Aviation Lights present");
+                //			if (NFEPresent)
+                //				Debug.Log("FB - Near Future Electric present");
+                //			if (NFSPresent)
+                //				Debug.Log("FB - Near Future Solar present");
+                //			if (KASPresent)
+                //				Debug.Log("FB - KAS present");
+                //			if (RT2Present)
+                //				Debug.Log("FB - RT2 present");
+                //			if (ScSPresent)
+                //				Debug.Log("FB - SCANSat present");
+                //			if (TelPresent)
+                //				Debug.Log("FB - Telemachus present");
+                //			if (TACLPresent)
+                //				Debug.Log("FB - TAC LS present");
+                //			if (AntRPresent)
+                //				Debug.Log("FB - AntennaRange present");
+                //			if (kOSPresent)
+                //				Debug.Log("FB - kOS present");
+                /*			if (KISPPresent)
+                                Debug.Log("FB - Interstellar present");
+                            if (BioPresent)
+                                Debug.Log("FB - Biomatic present");
+                            if (KarPresent)
+                                Debug.Log("FB - Karbonite present");
+                            if (BDSMPresent)
+                                Debug.Log("FB - btsm present"); */
+
+                if (allBodies.Count == 0)
+                {
+                    // Get solar system bodies and add to list
+                    List<CelestialBody> solSys = FlightGlobals.Bodies;
+                    foreach (CelestialBody body in solSys)
+                    {
+                        if (body.isHomeWorld)
+                            pickedBod = body.name;
+                        allBodies.Add(new celBody(body.name, body.Radius / 1000, body.gravParameter / 1000000000, (int)body.rotationPeriod));
+                        Log.Info("FB - " + body.name + " - " + body.Radius / 1000 + " - " + body.gravParameter / 1000000000 + " - " + (int)body.rotationPeriod);
+
+                    }
+                    Log.Info("FB - homeworld is " + pickedBod);
+                    allBodNames = allBodies.Select(x => x.CelName).ToArray();
+                    Array.Sort<string>(allBodNames);
+                    pickedBodIdx = allBodNames.IndexOf(pickedBod);
+                }
+
+
+                definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
             }
-            if (AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AmpYear"))
-            {
-                Log.Info("AmpYear detected, disabling FuseBox");
-            }
-
-            // Find out which mods are present
-
-            ALPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AviationLights");
-            NFEPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureElectrical");
-            NFSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureSolar");
-            KASPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KAS");
-            RT2Present = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "RemoteTech");
-            ScSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SCANsat");
-            TelPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "Telemachus");
-            TACLPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "TacLifeSupport");
-            AntRPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AntennaRange");
-            kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
-            DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
-            //			BDSMPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "BTSM");
-
-            //			Debug.Log("FB - Checked for mods");
-            //			if (ALPresent)
-            //				Debug.Log("FB - Aviation Lights present");
-            //			if (NFEPresent)
-            //				Debug.Log("FB - Near Future Electric present");
-            //			if (NFSPresent)
-            //				Debug.Log("FB - Near Future Solar present");
-            //			if (KASPresent)
-            //				Debug.Log("FB - KAS present");
-            //			if (RT2Present)
-            //				Debug.Log("FB - RT2 present");
-            //			if (ScSPresent)
-            //				Debug.Log("FB - SCANSat present");
-            //			if (TelPresent)
-            //				Debug.Log("FB - Telemachus present");
-            //			if (TACLPresent)
-            //				Debug.Log("FB - TAC LS present");
-            //			if (AntRPresent)
-            //				Debug.Log("FB - AntennaRange present");
-            //			if (kOSPresent)
-            //				Debug.Log("FB - kOS present");
-            /*			if (KISPPresent)
-                            Debug.Log("FB - Interstellar present");
-                        if (BioPresent)
-                            Debug.Log("FB - Biomatic present");
-                        if (KarPresent)
-                            Debug.Log("FB - Karbonite present");
-                        if (BDSMPresent)
-                            Debug.Log("FB - btsm present"); */
-
-            // Get solar system bodies and add to list
-            List<CelestialBody> solSys = FlightGlobals.Bodies;
-            foreach (CelestialBody body in solSys)
-            {
-                if (body.isHomeWorld)
-                    pickedBod = body.name;
-                allBodies.Add(new celBody(body.name, body.Radius / 1000, body.gravParameter / 1000000000, (int)body.rotationPeriod));
-                //				Debug.Log("FB - " + body.name + " - " + body.Radius/1000 + " - " + body.gravParameter/1000000000 + " - " + (int) body.rotationPeriod);
-            }
-            //			Debug.Log("FB - homeworld is " + pickedBod);
-            allBodNames = allBodies.Select(x => x.CelName).ToArray();
-            Array.Sort<string>(allBodNames);
-
             GameEvents.onGUIApplicationLauncherReady.Add(CreateLauncher);
             //Hide/show UI event addition
             GameEvents.onHideUI.Add(HideUI);
             GameEvents.onShowUI.Add(ShowUI);
-
-            definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
-
         }
 
         protected void OnDestroy()
