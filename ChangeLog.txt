@@ -53,6 +53,10 @@ ChangeLog
 
 0.1.7
 	Fixed nullrefs in editor
+	Added empty module to avoid AmpYear error in log
+
+0.1.8
+	Fixed reserve battery parts ot not show up in the editor
 
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
