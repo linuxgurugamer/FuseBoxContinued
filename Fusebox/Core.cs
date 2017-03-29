@@ -30,43 +30,43 @@ namespace Ratzap
         protected static int drkWidth = 160;    // Settings window width
         protected static int drkHeight = 10;    // Settings window height
 
-        protected Rect mainWin = new Rect(Screen.width / 2, Screen.height / 4, mainWidth, mainHeight);  // Main window position and size
-        protected Rect filterWin = new Rect(Screen.width / 2, Screen.height / 4, filtWidth, filtHeight);  // Filter window position and size
-        protected Rect setWin = new Rect(Screen.width / 2, Screen.height / 4, setWidth, setHeight);  // Filter window position and size
-        protected Rect drkWin = new Rect(Screen.width / 2, Screen.height / 4, drkWidth, drkHeight);  // Filter window position and size
-        protected Rect warnWin = new Rect(Screen.width / 2, Screen.height / 4, 460, 120);  // Warp warning window position and size
-        protected Rect popupWin = new Rect(Screen.width / 2, Screen.height / 4, 120, 23);  // Dark timer pick window position and size
+        protected static Rect mainWin = new Rect(Screen.width / 2, Screen.height / 4, mainWidth, mainHeight);  // Main window position and size
+        protected static Rect filterWin = new Rect(Screen.width / 2, Screen.height / 4, filtWidth, filtHeight);  // Filter window position and size
+        protected static Rect setWin = new Rect(Screen.width / 2, Screen.height / 4, setWidth, setHeight);  // Filter window position and size
+        protected static Rect drkWin = new Rect(Screen.width / 2, Screen.height / 4, drkWidth, drkHeight);  // Filter window position and size
+        protected static Rect warnWin = new Rect(Screen.width / 2, Screen.height / 4, 460, 120);  // Warp warning window position and size
+        protected static Rect popupWin = new Rect(Screen.width / 2, Screen.height / 4, 120, 23);  // Dark timer pick window position and size
 
-        protected bool uiActive = false;
-        protected bool useSmokeSkin;
-        protected bool doOneFrame = false;
-        protected bool shrinkMain = false;
-        protected bool showFilters = false;
-        protected bool showSettings = false;
-        protected bool showDarkTime = false;
-        protected bool globalHidden = false;
-        protected bool ALPresent = false;
-        protected bool NFEPresent = false;
-        protected bool NFSPresent = false;
-        protected bool KASPresent = false;
-        protected bool RT2Present = false;
-        protected bool ScSPresent = false;
-        protected bool TelPresent = false;
-        protected bool TACLPresent = false;
-        protected bool kOSPresent = false;
-        protected bool DeepFreezePresent = false;
-        //		protected bool BioPresent = false;
-        protected bool AntRPresent = false;
-        //		protected bool KarPresent = false;
-        //		protected bool BDSMPresent = false;
-        protected bool wasDraining = false;
-        //		protected bool isCharging = false;
-        //		protected bool skinChange = false;
-        protected bool showCharge = true;
+        protected static bool uiActive = false;
+        protected static bool useSmokeSkin;
+        protected static bool doOneFrame = false;
+        protected static bool shrinkMain = false;
+        protected static bool showFilters = false;
+        protected static bool showSettings = false;
+        protected static bool showDarkTime = false;
+        protected static bool globalHidden = false;
+        protected static bool ALPresent = false;
+        protected static bool NFEPresent = false;
+        protected static bool NFSPresent = false;
+        protected static bool KASPresent = false;
+        protected static bool RT2Present = false;
+        protected static bool ScSPresent = false;
+        protected static bool TelPresent = false;
+        protected static bool TACLPresent = false;
+        protected static bool kOSPresent = false;
+        protected static bool DeepFreezePresent = false;
+        //		protected static bool BioPresent = false;
+        protected static bool AntRPresent = false;
+        //		protected static bool KarPresent = false;
+        //		protected static bool BDSMPresent = false;
+        protected static bool wasDraining = false;
+        //		protected static bool isCharging = false;
+        //		protected static bool skinChange = false;
+        protected static bool showCharge = true;
 
-        protected bool[] typeArr = new bool[20];
+        protected static bool[] typeArr = new bool[20];
 
-        public enum DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
+        public enum  DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
         protected static DisplayMode mode = DisplayMode.none;
 
         // protected static int mode = -1;  // Display mode, currently  0 for In-Flight, 1 for Editor, -1 to hide
@@ -98,18 +98,18 @@ namespace Ratzap
         protected static Color OtherCol = Color.white;
 
         // Toolbar stuff, cribbed from VOID
-        protected ApplicationLauncherButton appLauncherButton;
-        internal IButton ToolbarButton;
-        protected Texture2D FB_TB_full;
-        protected Texture2D FB_TB_pos2b;
-        protected Texture2D FB_TB_pos1b;
-        protected Texture2D FB_TB_dr3b;
-        protected Texture2D FB_TB_dr2b;
-        protected Texture2D FB_TB_dr1b;
-        protected Texture2D FB_TB_empty;
-        protected Texture2D FB_TB_posgen;
-        protected Texture2D FB_TB_drain;
-        protected int frmCount = 1;
+        protected static ApplicationLauncherButton appLauncherButton;
+        protected static IButton ToolbarButton;
+        protected static Texture2D FB_TB_full;
+        protected static Texture2D FB_TB_pos2b;
+        protected static Texture2D FB_TB_pos1b;
+        protected static Texture2D FB_TB_dr3b;
+        protected static Texture2D FB_TB_dr2b;
+        protected static Texture2D FB_TB_dr1b;
+        protected static Texture2D FB_TB_empty;
+        protected static Texture2D FB_TB_posgen;
+        protected static Texture2D FB_TB_drain;
+        protected static int frmCount = 1;
         protected string FB_TB_full_P =  "Fusebox/TB_icons/3of3green";
         protected string FB_TB_pos2b_P =  "Fusebox/TB_icons/2of3green";
         protected string FB_TB_pos1b_P =  "Fusebox/TB_icons/1of3green";
@@ -123,14 +123,14 @@ namespace Ratzap
         // Darkness calc bits
         public static List<celBody> allBodies = new List<celBody>();
         public static string[] allBodNames;
-        protected bool pickBod = false;
+        protected static bool pickBod = false;
         protected static string pickedBod = "";
         protected static int pickedBodIdx = 3;
-        protected int celOrbit = 100;
-        protected bool pickShow = false;
+        protected static int celOrbit = 100;
+        protected static bool pickShow = false;
 
 
-        protected List<Part> parts;
+        protected static List<Part> parts;
         protected static PartResourceDefinition definition;
 
         public void Awake()
@@ -218,10 +218,10 @@ namespace Ratzap
                     pickedBodIdx = allBodNames.IndexOf(pickedBod);
                 }
 
-
+                GameEvents.onGUIApplicationLauncherReady.Add(CreateLauncher);
                 definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
             }
-            GameEvents.onGUIApplicationLauncherReady.Add(CreateLauncher);
+            
             //Hide/show UI event addition
             GameEvents.onHideUI.Add(HideUI);
             GameEvents.onShowUI.Add(ShowUI);
@@ -229,8 +229,8 @@ namespace Ratzap
 
         protected void OnDestroy()
         {
-            DestroyLauncher();
-            GameEvents.onGUIApplicationLauncherReady.Remove(CreateLauncher);
+           // DestroyLauncher();
+           // GameEvents.onGUIApplicationLauncherReady.Remove(CreateLauncher);
         }
 
         protected void CreateLauncher()
@@ -255,7 +255,7 @@ namespace Ratzap
                 ToolbarButton.TexturePath = this.FB_TB_full_P;
                 ToolbarButton.Visible = true;
                 ToolbarButton.OnClick += (
-                    (e) => this.uiActive = !this.uiActive
+                    (e) => uiActive = !uiActive
                 );
             }
             else if (appLauncherButton == null)
@@ -1263,7 +1263,7 @@ namespace Ratzap
             if (newIconName != "")
             {
                 if (ToolbarManager.ToolbarAvailable)
-                    this.ToolbarButton.TexturePath = newIconName;
+                    ToolbarButton.TexturePath = newIconName;
                 else
                 {
                     if (appLauncherButton != null)

@@ -63,5 +63,8 @@ ChangeLog
 	Picked body now remembered
 	Initial picked body now set to homeworld
 
+0.1.8.2
+	Fixed issue where some settings weren't carrying to different scenes
+
 Notes
 KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
