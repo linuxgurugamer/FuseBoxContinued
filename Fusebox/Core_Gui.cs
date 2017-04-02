@@ -263,16 +263,21 @@ namespace Ratzap
                 typeArr[13] = GUILayout.Toggle(typeArr[13], "SCANsat", typeArr[13] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             if (TACLPresent)
                 typeArr[14] = GUILayout.Toggle(typeArr[14], "TAC Life Sup", typeArr[14] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            
+
             //            if (KISPPresent)
             //                typeArr[15] = GUILayout.Toggle(typeArr[15], "Interstellar", typeArr[15] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true)); 
             if (KASPresent)
                 typeArr[16] = GUILayout.Toggle(typeArr[16], "KAS", typeArr[16] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
-            			if (DeepFreezePresent)
-            				typeArr[17] = GUILayout.Toggle(typeArr[17], "Deep Freeze", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            if (DeepFreezePresent)
+            	typeArr[17] = GUILayout.Toggle(typeArr[17], "Deep Freeze", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
             //			if (KarPresent)
             //				typeArr[18] = GUILayout.Toggle(typeArr[18], "Karbonite", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            if (KSPWheelPresent)
+                typeArr[19] = GUILayout.Toggle(typeArr[19], "Repulsors", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
             bool b = false;
             for (int i = 0; i < 20; i++)
                 if (typeArr[i] != typeArrCopy[i])
@@ -296,7 +301,11 @@ namespace Ratzap
                     filterList.Add("FissionReactor");
                     filterList.Add("ModuleResourceHarvester");
                 }
-                if (!typeArr[2]) filterList.Add("ModuleWheel");
+                if (!typeArr[2])
+                {
+                    filterList.Add("ModuleWheel");
+                    filterList.Add("KSPWheelMotor");                    
+                }
                 if (!typeArr[3])
                 {
                     filterList.Add("ModuleCommand");
@@ -320,7 +329,11 @@ namespace Ratzap
                     filterList.Add("ModuleEngines");
                     filterList.Add("ModuleEnginesFX");
                 }
-                if (!typeArr[8]) filterList.Add("ModuleAlternator");
+                if (!typeArr[8])
+                {
+                    filterList.Add("ModuleAlternator");
+                    filterList.Add("KFAPUController");
+                }
                 if (!typeArr[9])
                 {
                     filterList.Add("ModuleScienceLab");
@@ -332,6 +345,10 @@ namespace Ratzap
                 {
                     filterList.Add("ModuleRadioisotopeGenerator");
                     filterList.Add("ModuleCurvedSolarPanel");
+                    filterList.Add("FissionReactor");
+                    filterList.Add("FissionGenerator");
+                    filterList.Add("DischargeCapacitor");
+
                 }
                 if (!typeArr[13])
                 {
@@ -347,7 +364,7 @@ namespace Ratzap
                 }
                 if (!typeArr[17]) filterList.Add("DeepFreezer");
                 //if (!typeArr[18]) filterList.Add("USI_ResourceConverter");
-
+                if (!typeArr[19]) filterList.Add("KSPWheelRepulsor");
                 if (FlightGlobals.fetch != null && FlightGlobals.ActiveVessel != null)  // Check if in flight
                 {
                     // foreach (var s in filterList)

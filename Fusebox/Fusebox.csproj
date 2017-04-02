@@ -52,6 +52,9 @@
     <Reference Include="kOS">
       <HintPath>R:\KSP_1.2.2_dev\GameData\kOS\Plugins\kOS.dll</HintPath>
     </Reference>
+    <Reference Include="KSPWheel">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\KSPWheel\Plugin\KSPWheel.dll</HintPath>
+    </Reference>
     <Reference Include="NearFutureElectrical">
       <HintPath>R:\KSP_1.2.2_dev\GameData\NearFutureElectrical\Plugins\NearFutureElectrical.dll</HintPath>
     </Reference>
@@ -63,6 +66,12 @@
     </Reference>
     <Reference Include="SCANsat">
       <HintPath>R:\KSP_1.2.2_dev\GameData\SCANsat\Plugins\SCANsat.dll</HintPath>
+    </Reference>
+    <Reference Include="SSTUTools">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\SSTU\Plugins\SSTUTools.dll</HintPath>
+    </Reference>
+    <Reference Include="SurfaceLights">
+      <HintPath>R:\KSP_1.2.2_dev\GameData\SurfaceLights\Plugins\SurfaceLights.dll</HintPath>
     </Reference>
     <Reference Include="System">
       <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\System.dll</HintPath>

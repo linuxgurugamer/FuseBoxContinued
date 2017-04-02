@@ -45,6 +45,8 @@ namespace Ratzap
         protected static bool showSettings = false;
         protected static bool showDarkTime = false;
         protected static bool globalHidden = false;
+
+        protected static bool SLPresent = false;
         protected static bool ALPresent = false;
         protected static bool NFEPresent = false;
         protected static bool NFSPresent = false;
@@ -55,10 +57,16 @@ namespace Ratzap
         protected static bool TACLPresent = false;
         protected static bool kOSPresent = false;
         protected static bool DeepFreezePresent = false;
+        protected static bool SSTUToolsPresent = false;
+
         //		protected static bool BioPresent = false;
         protected static bool AntRPresent = false;
         //		protected static bool KarPresent = false;
         //		protected static bool BDSMPresent = false;
+        protected static bool KSPWheelPresent = false;
+
+
+
         protected static bool wasDraining = false;
         //		protected static bool isCharging = false;
         //		protected static bool skinChange = false;
@@ -132,6 +140,7 @@ namespace Ratzap
 
         protected static List<Part> parts;
         protected static PartResourceDefinition definition;
+        protected static PartResourceDefinition storedChargeDefinition;
 
         public void Awake()
         {
@@ -158,6 +167,7 @@ namespace Ratzap
                 // Find out which mods are present
 
                 ALPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AviationLights");
+                SLPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SurfaceLights");
                 NFEPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureElectrical");
                 NFSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "NearFutureSolar");
                 KASPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KAS");
@@ -168,6 +178,9 @@ namespace Ratzap
                 AntRPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "AntennaRange");
                 kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
                 DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
+                KSPWheelPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KSPWheel");
+                SSTUToolsPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SSTUTools");
+
                 //			BDSMPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "BTSM");
 
                 //			Debug.Log("FB - Checked for mods");
@@ -220,6 +233,8 @@ namespace Ratzap
 
                 GameEvents.onGUIApplicationLauncherReady.Add(CreateLauncher);
                 definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
+                if (NFEPresent)
+                    storedChargeDefinition = PartResourceLibrary.Instance.GetDefinition("StoredCharge");
             }
             
             //Hide/show UI event addition
@@ -374,6 +389,7 @@ namespace Ratzap
                         am_max += r.maxAmount;
                         am_cur += r.amount;
                     }
+
                 }
 
                 bool currentEngActive = false;
@@ -424,6 +440,7 @@ namespace Ratzap
                             break;
                         case "ModuleResourceConverter":
                         case "FissionReactor":
+                        case "KFAPUController":
                             if (typeArr[1])
                             {
                                 ModuleResourceConverter tmpGen = (ModuleResourceConverter)tmpPM;
@@ -646,7 +663,16 @@ namespace Ratzap
                             Debug.Log("FB - Wrong Aviation Lights library version - disabled.");
                             ALPresent = false;
                         }
-
+                    if (SLPresent)
+                        try
+                        {
+                            checkSv(tmpPM);
+                        }
+                        catch
+                        {
+                            Debug.Log("FB - Wrong Surface Lights library version - disabled.");
+                            SLPresent = false;
+                        }
                     if (KASPresent)
                         try
                         {
@@ -740,8 +766,28 @@ namespace Ratzap
                         }
                         catch
                         {
-                            Debug.Log("FB - Wrong kOS library version - disabled.");
+                            Debug.Log("FB - Wrong DeepFreeze library version - disabled.");
                             DeepFreezePresent = false;
+                        }
+                    if (KSPWheelPresent)
+                        try
+                        {
+                            checkKSPWheel(tmpPM);
+                        }
+                        catch
+                        {
+                            Debug.Log("FB - Wrong KSPWheelPresent library version - disabled.");
+                            KSPWheelPresent = false;
+                        }
+                    if (SSTUToolsPresent)
+                        try
+                        {
+                            checkSSTUTools(tmpPM);
+                        }
+                        catch
+                        {
+                            Debug.Log("FB - Wrong SSTUTools library version - disabled.");
+                            SSTUToolsPresent = false;
                         }
 
                     /*						if (BioPresent)
@@ -813,6 +859,39 @@ namespace Ratzap
             }
         }
 
+        protected void checkSv(PartModule tmpPM)
+        {
+            switch (tmpPM.moduleName)
+            {
+                case "ModuleColoredLensLight":
+                    if (typeArr[4])
+                    {
+
+                        global::SurfaceLights.ModuleColoredLensLight tmpLight = (global::SurfaceLights.ModuleColoredLensLight)tmpPM;
+                        if (mode == DisplayMode.editor || (mode == DisplayMode.inFlight && tmpPM.isActiveAndEnabled))
+                            am_use += tmpLight.resourceAmount;
+                    }
+                    break;
+                case "ModuleMultiPointSurfaceLight":
+                    if (typeArr[4])
+                    {
+                        global::KSP_Light_Mods.ModuleMultiPointSurfaceLight tmpLight = (global::KSP_Light_Mods.ModuleMultiPointSurfaceLight)tmpPM;
+                        if (mode == DisplayMode.editor || (mode == DisplayMode.inFlight && tmpPM.isActiveAndEnabled))
+                            am_use += tmpLight.resourceAmount;
+                    }
+                    break;
+                    
+                case "ModuleStockLightColoredLens":
+                    if (typeArr[4])
+                    {
+                        global::SurfaceLights.ModuleStockLightColoredLens tmpLight = (global::SurfaceLights.ModuleStockLightColoredLens)tmpPM;
+                        if (mode == DisplayMode.editor || (mode == DisplayMode.inFlight && tmpPM.isActiveAndEnabled))
+                            am_use += tmpLight.resourceAmount;
+                    }
+                    break;
+            }
+        }
+
         protected void checkNFE(PartModule tmpPM)
         {
             switch (tmpPM.moduleName)
@@ -821,10 +900,80 @@ namespace Ratzap
                     if (typeArr[12])
                     {
                         global::NearFutureElectrical.ModuleRadioisotopeGenerator tmpGen = (global::NearFutureElectrical.ModuleRadioisotopeGenerator)tmpPM;
-                        if (tmpGen.PercentPower > 0.0)
-                            am_prod += tmpGen.BasePower * (tmpGen.PercentPower / 100);
-                        else
+                        if (mode == DisplayMode.editor)
                             am_prod += tmpGen.BasePower;
+                       else
+                            am_prod += tmpGen.BasePower * (tmpGen.PercentPower / 100);                       
+                    }
+                    break;
+#if false
+                case "FissionReactor":
+                    if (typeArr[12])
+                    {
+                        NearFutureElectrical.FissionReactor tmpGen = (global::NearFutureElectrical.FissionReactor)tmpPM;
+
+                        if (mode != DisplayMode.editor)
+                            am_prod += tmpGen.AvailablePower* (tmpGen.ActualPowerPercent / 100);
+                        else
+                            am_prod += tmpGen.AvailablePower;
+                    }
+                    break;
+
+                                        // Following needed for Capaciters in Near Future Electrical
+                    if (NFEPresent && r.info.id == storedChargeDefinition.id)
+                    {
+                        am_max += r.maxAmount;
+                        am_cur += r.amount;
+                    }
+
+#endif              
+
+
+                case "FissionGenerator":
+                    if (typeArr[12])
+                    {
+                        NearFutureElectrical.FissionGenerator tmpGen = (global::NearFutureElectrical.FissionGenerator)tmpPM;
+
+                        if (mode != DisplayMode.editor)
+                            am_prod += tmpGen.CurrentGeneration;
+                        else
+                            am_prod += tmpGen.PowerGeneration;
+                    }
+                    break;
+
+
+                case "DischargeCapacitor":
+                    if (typeArr[12])
+                    {
+                        global::NearFutureElectrical.DischargeCapacitor tmpGen = (global::NearFutureElectrical.DischargeCapacitor)tmpPM;
+                        //if (mode == DisplayMode.inFlight && tmpGen.DischargeRate > 0.0)
+                        if (mode != DisplayMode.editor)
+                        {
+                            foreach (PartResource r in tmpPM.part.Resources)
+                            {
+                                if (r.info.id == storedChargeDefinition.id)
+                                {
+                                    //am_use += tmpGen.dischargeActual;
+                                    am_max += r.maxAmount;
+                                    am_cur += r.amount;
+                                }
+                            }
+
+                        }
+                        else
+                        {
+
+                            foreach (PartResource r in tmpPM.part.Resources)
+                            {
+                                if (r.info.id == storedChargeDefinition.id)
+                                {
+                                    //am_use += tmpGen.DischargeRate;
+                                    am_max += r.maxAmount;
+                                    am_cur += r.maxAmount;
+                                }
+                            }
+                        }
+
                     }
                     break;
             }
@@ -993,13 +1142,80 @@ namespace Ratzap
                 case "DeepFreezer":
                     if (typeArr[17])
                     {
-                       DF.DeepFreezer tmpDeepFreezer = (DF.DeepFreezer) tmpPM;
-   
-                       am_use += tmpDeepFreezer.ChargeRequired;
+                        DF.DeepFreezer tmpDeepFreezer = (DF.DeepFreezer)tmpPM;
+                        if ((mode == DisplayMode.inFlight && tmpDeepFreezer.isActiveAndEnabled) ||
+                            mode == DisplayMode.editor)
+                            am_use += tmpDeepFreezer.ChargeRequired;
                     }
                     break;
             }
         }
+        protected void checkKSPWheel(PartModule tmpPM)
+        {
+            switch (tmpPM.moduleName)
+            {
+                case "KSPWheelMotor":
+                    if (typeArr[2])
+                    {
+                        KSPWheel.KSPWheelMotor tmpKSPWheel = (KSPWheel.KSPWheelMotor)tmpPM;
+                        if (mode == DisplayMode.inFlight && tmpKSPWheel.isActiveAndEnabled)
+                            am_use += tmpKSPWheel.guiResourceUse;
+                        else if (mode == DisplayMode.editor)
+                            am_use += tmpKSPWheel.maxECDraw;
+                    }
+                    break;
+                case "KSPWheelRepulsor":
+                    if (typeArr[19])
+                    {
+                        KSPWheel.KSPWheelRepulsor tmpKSPWheel = (KSPWheel.KSPWheelRepulsor)tmpPM;
+                        if (mode == DisplayMode.inFlight && tmpKSPWheel.isActiveAndEnabled)
+                            am_use += tmpKSPWheel.guiEnergyUse;
+                        if (mode == DisplayMode.editor)
+                            am_use += tmpPM.vessel.GetTotalMass() * tmpKSPWheel.energyUse;
+                    }
+                    break;
+#if false
+                case "KFAPUController":
+                    if (typeArr[2])
+                    {
+                        ModuleResourceConverter tmpGen = (ModuleResourceConverter)tmpPM;
+
+                        if (mode == DisplayMode.inFlight)
+                            am_prod += tmpGen.energyOutput * tmpGen.throttle;
+                        if (mode == DisplayMode.editor)
+                            am_prod += tmpGen.energyOutput;
+                    }
+                    break;
+#endif
+            }
+        }
+
+        
+        protected void checkSSTUTools(PartModule tmpPM)
+        {
+
+            switch (tmpPM.moduleName)
+            {
+                case "SSTUSolarPanelDeployable":
+                    if (typeArr[0])
+                    {
+                        SSTUTools.SSTUSolarPanelDeployable tmpSol = (SSTUTools.SSTUSolarPanelDeployable)tmpPM;
+                        if (mode == DisplayMode.editor || tmpSol.isActiveAndEnabled)
+                            am_prod += tmpSol.resourceAmount;
+                    }
+                    break;
+                case "SSTUSolarPanelStatic":
+                    if (typeArr[0])
+                    {
+                        SSTUTools.SSTUSolarPanelStatic tmpSol = (SSTUTools.SSTUSolarPanelStatic)tmpPM;
+                        if (mode == DisplayMode.editor || tmpSol.isActiveAndEnabled)
+                            am_prod += tmpSol.resourceAmount;
+                    }
+                    break;
+                    
+            }
+        }
+
         /*		protected void checkBio(PartModule tmpPM)
                 {
                     switch (tmpPM.moduleName)

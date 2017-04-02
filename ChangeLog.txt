@@ -66,5 +66,12 @@ ChangeLog
 0.1.8.2
 	Fixed issue where some settings weren't carrying to different scenes
 
+0.1.9
+	Added support for all modules in Near Electrical
+	Added support for Surface  Mounted Stock-Alike Lights
+	Added support for KSPWheel
+	Added partial support for SSTU, full support waiting on some changes
+
+
 Notes
-KSP-IE is not support, since it uses something called Megajoule power source, instead of ElectricCharge
+KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
