@@ -34,20 +34,24 @@
     </CustomCommands>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\KSP_x64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\KSP_x64_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="AviationLights">
-      <HintPath>R:\KSP_1.2.2_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
+    <Reference Include="AviationLights, Version=3.12.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
     </Reference>
     <Reference Include="DeepFreeze">
       <HintPath>R:\KSP_1.2.2_dev\GameData\REPOSoftTech\DeepFreeze\Plugins\DeepFreeze.dll</HintPath>
     </Reference>
-    <Reference Include="KAS">
-      <HintPath>R:\KSP_1.2.2_dev\GameData\KAS\Plugins\KAS.dll</HintPath>
+    <Reference Include="KAS, Version=0.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\GameData\KAS\Plugins\KAS.dll</HintPath>
     </Reference>
     <Reference Include="kOS">
       <HintPath>R:\KSP_1.2.2_dev\GameData\kOS\Plugins\kOS.dll</HintPath>
@@ -67,23 +71,28 @@
     <Reference Include="SCANsat">
       <HintPath>R:\KSP_1.2.2_dev\GameData\SCANsat\Plugins\SCANsat.dll</HintPath>
     </Reference>
-    <Reference Include="SSTUTools">
-      <HintPath>R:\KSP_1.2.2_dev\GameData\SSTU\Plugins\SSTUTools.dll</HintPath>
+    <Reference Include="SSTUTools, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\GameData\SSTU\Plugins\SSTUTools.dll</HintPath>
     </Reference>
-    <Reference Include="SurfaceLights">
-      <HintPath>R:\KSP_1.2.2_dev\GameData\SurfaceLights\Plugins\SurfaceLights.dll</HintPath>
+    <Reference Include="SurfaceLights, Version=1.3.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\GameData\SurfaceLights\Plugins\SurfaceLights.dll</HintPath>
     </Reference>
     <Reference Include="System">
-      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\System.dll</HintPath>
+      <HintPath>R:\KSP_1.3.0_dev\KSP_x64_Data\Managed\System.dll</HintPath>
     </Reference>
-    <Reference Include="TacLifeSupport">
-      <HintPath>R:\KSP_1.2.2_dev\GameData\ThunderAerospace\TacLifeSupport\Plugins\TacLifeSupport.dll</HintPath>
+    <Reference Include="TacLifeSupport, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\GameData\ThunderAerospace\TacLifeSupport\Plugins\TacLifeSupport.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine">
-      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\KSP_x64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>R:\KSP_1.2.2_dev\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
+    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.0_dev\KSP_x64_Data\Managed\UnityEngine.UI.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
