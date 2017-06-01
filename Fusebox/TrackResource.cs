@@ -49,7 +49,7 @@ namespace TrackResource
         {
             Add(newvessel);
         }
-    
+
         private void OnVesselCreate(Vessel Vessel)
         {
             Add(Vessel);
@@ -60,7 +60,7 @@ namespace TrackResource
         }
         private void onVesselRecovered(ProtoVessel vessel, bool quick)
         {
-           // Remove(vessel);
+            // Remove(vessel);
         }
 
         public void onDestroy()
@@ -103,27 +103,35 @@ namespace TrackResource
             if (v == null)
                 return;
             Log.Info("Add: " + v.name);
-            if (!vesselDict.ContainsKey(v))
+            if (moduleFilterList == null)
             {
-                Log.Info("vessel being added: " + v.name);
-                ResourceStats r = VesselStatsManager.Instance.gameObject.AddComponent<ResourceStats>();
-                vesselDict.Add(v, r);
-                Log.Info("processing parts");
-                foreach (PartTapIn part in v.Parts)
+                Log.Info("modulefilterList is null");
+                return;
+            }
+            if (v.name.Substring(0, 9) != "kerbalEVA" && v.name.Substring(0, 4) != "flag")
+            {
+
+                Log.Info("ModuleFilterList.count: " + moduleFilterList.Count().ToString());
+                if (!vesselDict.ContainsKey(v))
                 {
-                    b = true;
-                    foreach (var s in moduleFilterList)
+                    Log.Info("vessel being added: " + v.name);
+                    ResourceStats r = VesselStatsManager.Instance.gameObject.AddComponent<ResourceStats>();
+                    vesselDict.Add(v, r);
+                    foreach (PartTapIn part in v.Parts)
                     {
-                        if (part.Modules.Contains(s))
+                        b = true;
+                        foreach (var s in moduleFilterList)
                         {
-                            b = false;
-                            break;
+                            if (part.Modules.Contains(s))
+                            {
+                                b = false;
+                                break;
+                            }
                         }
-                    }
-                    if (b)
-                    {
-                        Log.Info("OnRequestResource.Add: " + part.partInfo.title);
-                        part.OnRequestResource.Add(r.Sample);
+                        if (b)
+                        {
+                            part.OnRequestResource.Add(r.Sample);
+                        }
                     }
                 }
             }
