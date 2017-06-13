@@ -144,6 +144,7 @@ namespace Ratzap
 
         public void Awake()
         {
+            GameEvents.onGUIApplicationLauncherUnreadifying.Add(DestroyLauncher);
         }
 
         static bool initted = false;
