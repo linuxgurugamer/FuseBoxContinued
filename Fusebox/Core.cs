@@ -253,7 +253,7 @@ namespace Ratzap
         {
             Log.Info("CreateLauncher");
             FB_TB_posgen = GameDatabase.Instance.GetTexture(FB_TB_posgen_P, false);
-            if (ToolbarManager.ToolbarAvailable)
+            if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
             {
                 // Load toolbar icons
                 FB_TB_full = GameDatabase.Instance.GetTexture(FB_TB_full_P, false);
@@ -298,7 +298,7 @@ namespace Ratzap
             }
         }
 
-        protected void DestroyLauncher()
+        protected void DestroyLauncher(GameScenes gs)
         {
             if (appLauncherButton != null)
             {
