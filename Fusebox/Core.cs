@@ -306,7 +306,7 @@ namespace Ratzap
                 appLauncherButton = null;
             }
 
-            if (ToolbarButton != null)
+            if (ToolbarButton != null && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
             {
                 ToolbarButton.Destroy();
                 ToolbarButton = null;
@@ -1479,7 +1479,7 @@ namespace Ratzap
             }
             if (newIconName != "")
             {
-                if (ToolbarManager.ToolbarAvailable)
+                if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
                     ToolbarButton.TexturePath = newIconName;
                 else
                 {
