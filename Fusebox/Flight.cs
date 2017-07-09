@@ -47,15 +47,20 @@ namespace Ratzap
                 //updateAmValues();
                 timeIntervalMeasured = Planetarium.GetUniversalTime() - lastTimeCheck;
                 lastTimeCheck = Planetarium.GetUniversalTime();
-                ResourceStats rs = VesselStatsManager.Instance.Get(FlightGlobals.ActiveVessel);
+                Log.Info("OnGUI 1");
+                ResourceStats rs = VesselStatsManager.Instance.GetOrAdd(FlightGlobals.ActiveVessel);
+                Log.Info("OnGUI 2");
                 if (rs != null)
                 {
+                    Log.Info("OnGUI 3");
                     am_prod = -rs.GetGeneration("ElectricCharge") / timeIntervalMeasured;
                     am_use = rs.GetConsumption("ElectricCharge") / timeIntervalMeasured;
                     Log.Info("OnGUI.GetTotalConsumption: " + (rs.GetConsumption("ElectricCharge") / timeIntervalMeasured).ToString());
                     Log.Info("OnGUI: " + (rs.GetGeneration("ElectricCharge") / timeIntervalMeasured).ToString());
                     rs.Reset();
                 }
+                Log.Info("OnGUI 4");
+
                 checkWinBounds();
 
                

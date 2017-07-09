@@ -72,6 +72,21 @@ ChangeLog
 	Added support for KSPWheel
 	Added partial support for SSTU, full support waiting on some changes
 
+0.1.10
+	Updated for 1.3
+
+0.1.11
+	Fixed exception when seeing EVA kerbal or a flag
+
+0.1.12
+	Fixed button showing up on menu screen, thanks to forum user @alshain for the fix
+	Make Blizzy toolbar optional
+
+0.1.13
+	Fixed NullRef which occured when Blizzy toolbar was installed, but not being used by this mod.
+
+0.1.14
+	Fixed a Nullref which creeped in during some other work.
 
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge

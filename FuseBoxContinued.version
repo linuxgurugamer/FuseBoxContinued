@@ -1,10 +1,10 @@
 {
   "NAME": "FuseBoxContinued",
-  "URL": "http://ksp-avc.cybutek.net/version.php?id=453",
+  "URL": "https://raw.githubusercontent.com/linuxgurugamer/FuseBoxContinued/master/FuseBoxContinued.version",
   "VERSION": {
     "MAJOR": 0,
     "MINOR": 1,
-    "PATCH": 10,
+    "PATCH": 14,
     "BUILD": 0
   },
   "KSP_VERSION": {

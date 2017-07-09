@@ -834,7 +834,7 @@ namespace Ratzap
             {
                 timeIntervalMeasured = Planetarium.GetUniversalTime() - lastTimeCheck;
                 lastTimeCheck = Planetarium.GetUniversalTime();
-                ResourceStats rs = VesselStatsManager.Instance.Get(FlightGlobals.ActiveVessel);
+                ResourceStats rs = VesselStatsManager.Instance.GetOrAdd(FlightGlobals.ActiveVessel);
                 if (rs != null)
                 {
                     //m_prod2 = rs.GetGeneration("ElectricCharge");

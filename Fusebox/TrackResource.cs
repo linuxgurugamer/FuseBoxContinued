@@ -15,7 +15,7 @@ using Ratzap;
 namespace TrackResource
 {
 
-    [KSPAddon(KSPAddon.Startup.Flight, false)]
+    [KSPAddon(KSPAddon.Startup.Flight, true)]
     public class VesselStatsManager : MonoBehaviour
     {
         private static Dictionary<Vessel, ResourceStats> vesselDict = new Dictionary<Vessel, ResourceStats>();
@@ -29,43 +29,60 @@ namespace TrackResource
 
         public void Start()
         {
-            GameEvents.onVesselGoOffRails.Add(Add);
+            Log.Info("TrackResource.Start");
+            GameEvents.onVesselGoOffRails.Add(OnVesselGoOffRails);
             GameEvents.onVesselWillDestroy.Add(Remove);
             GameEvents.onTimeWarpRateChanged.Add(Check);
             GameEvents.onVesselWasModified.Add(Reload);
+            GameEvents.OnVesselRollout.Add(OnVesselRollout);
+            
 
             GameEvents.onVesselChange.Add(OnVesselChange);
             GameEvents.onVesselLoaded.Add(OnVesselLoad);
             GameEvents.onVesselCreate.Add(OnVesselCreate);
             GameEvents.onVesselDestroy.Add(onVesselDestroy);
             GameEvents.onVesselRecovered.Add(onVesselRecovered);
+            DontDestroyOnLoad(this);
         }
-
+        private void OnVesselRollout(ShipConstruct sc)
+        {
+            Log.Info("OnVesselRollout");
+        }
+        private void OnVesselGoOffRails(Vessel newvessel)
+        {
+            Log.Info("OnVesselGoOffRails");
+            Add(newvessel);
+        }
         private void OnVesselChange(Vessel newvessel)
         {
+            Log.Info("OnVesselChange");
             Add(newvessel);
         }
         private void OnVesselLoad(Vessel newvessel)
         {
+            Log.Info("OnVesselLoad");
             Add(newvessel);
         }
 
         private void OnVesselCreate(Vessel Vessel)
         {
+            Log.Info("OnVesselCreate");
             Add(Vessel);
         }
         private void onVesselDestroy(Vessel vessel)
         {
+            Log.Info("onVesselDestroy");
             Remove(vessel);
         }
         private void onVesselRecovered(ProtoVessel vessel, bool quick)
         {
+            Log.Info("OnVesselRecovered");
             // Remove(vessel);
         }
 
         public void onDestroy()
         {
-            GameEvents.onVesselGoOffRails.Remove(Add);
+            GameEvents.onVesselGoOffRails.Remove(OnVesselGoOffRails);
             GameEvents.onVesselWillDestroy.Remove(Remove);
             GameEvents.onTimeWarpRateChanged.Remove(Check);
             GameEvents.onVesselWasModified.Remove(Reload);
@@ -99,6 +116,7 @@ namespace TrackResource
 
         void Add(Vessel v)
         {
+            Log.Info("VesselStatsManager.Add");
             bool b;
             if (v == null)
                 return;
@@ -108,14 +126,22 @@ namespace TrackResource
                 Log.Info("modulefilterList is null");
                 return;
             }
-            if (v.name.Substring(0, 9) != "kerbalEVA" && v.name.Substring(0, 4) != "flag")
+            bool b1 = true, b2 = true;
+            if (v.name.Length >= 9)
+                b1 = (v.name.Substring(0, 9) != "kerbalEVA");
+            if (v.name.Length >= 4)
+                b2 = (v.name.Substring(0, 4) != "flag");
+            //if ((v.name.Length >= 9 && v.name.Substring(0, 9) != "kerbalEVA") && (v.name.Length >= 4 && v.name.Substring(0, 4) != "flag") || 
+            //    v.name.Length < 4)
+            if (b1 && b2)
             {
 
                 Log.Info("ModuleFilterList.count: " + moduleFilterList.Count().ToString());
                 if (!vesselDict.ContainsKey(v))
                 {
-                    Log.Info("vessel being added: " + v.name);
                     ResourceStats r = VesselStatsManager.Instance.gameObject.AddComponent<ResourceStats>();
+                    if (r == null)
+                        Log.Info("r == null");
                     vesselDict.Add(v, r);
                     foreach (PartTapIn part in v.Parts)
                     {
@@ -130,6 +156,7 @@ namespace TrackResource
                         }
                         if (b)
                         {
+                            Log.Info("Add 2");
                             part.OnRequestResource.Add(r.Sample);
                         }
                     }
@@ -174,16 +201,23 @@ namespace TrackResource
             catch { }
         }
 
-        public ResourceStats Get(Vessel v)
+        public ResourceStats GetOrAdd(Vessel v)
         {
+            Log.Info("ResourceStats");
             if (v == null)
+            {
+                Log.Info("vessel is null");
                 return null;
+            }
             ResourceStats result;
+            Log.Info("before TryGetValue");
             if (!vesselDict.TryGetValue(v, out result))
             {
+                Log.Info("Adding vessel: " + v.name);
                 Add(v);
                 result = vesselDict[v];
             }
+            Log.Info("After TryGetValue");
             return result;
         }
     }
