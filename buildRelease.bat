@@ -1,33 +1,28 @@
 
 @echo off
 
-copy /Y "FuseBox\bin\Release\FuseBox.dll" "GameData\FuseBox\Plugins"
-copy /Y FuseBoxContinued.version GameData\FuseBox
-copy /Y ..\MiniAVC.dll GameData\FuseBox
+rem Set variables here
 
-set DEFHOMEDRIVE=d:
-set DEFHOMEDIR=%DEFHOMEDRIVE%%HOMEPATH%
-set HOMEDIR=
-set HOMEDRIVE=%CD:~0,2%
+set GAMEDIR=FuseBoxContinued
+set VERSIONFILE=FuseBoxContinued
+set LICENSE=LICENSE
+set README=ReadMe.md
 
 set RELEASEDIR=d:\Users\jbb\release
 set ZIP="c:\Program Files\7-zip\7z.exe"
-echo Default homedir: %DEFHOMEDIR%
 
-rem set /p HOMEDIR= "Enter Home directory, or <CR> for default: "
+rem Copy files to GameData locations
 
-if "%HOMEDIR%" == "" (
-set HOMEDIR=%DEFHOMEDIR%
-) 
-echo %HOMEDIR%
+copy /Y "%1%2" "GameData\%GAMEDIR%\Plugins"
+copy /Y %VERSIONFILE%.version GameData\%GAMEDIR%
+copy /Y ..\MiniAVC.dll GameData\%GAMEDIR%
 
-SET _test=%HOMEDIR:~1,1%
-if "%_test%" == ":" (
-set HOMEDRIVE=%HOMEDIR:~0,2%
-)
+if "%LICENSE%" NEQ "" copy /y  %LICENSE% GameData\%GAMEDIR%
+if "%README%" NEQ "" copy /Y %README% GameData\%GAMEDIR%
 
+rem Get Version info
 
-set VERSIONFILE=FuseBoxContinued.version
+set VERSIONFILE=%VERSIONFILE%.version
 rem The following requires the JQ program, available here: https://stedolan.github.io/jq/download/
 c:\local\jq-win64  ".VERSION.MAJOR" %VERSIONFILE% >tmpfile
 set /P major=<tmpfile
@@ -45,10 +40,11 @@ set VERSION=%major%.%minor%.%patch%
 if "%build%" NEQ "0"  set VERSION=%VERSION%.%build%
 
 echo Version:  %VERSION%
-rem copy /Y README.md GameData\FuseBox
- 
 
-set FILE="%RELEASEDIR%\FuseBoxContinued-%VERSION%.zip"
+
+rem Build the zip FILE
+
+set FILE="%RELEASEDIR%\%GAMEDIR%-%VERSION%.zip"
 IF EXIST %FILE% del /F %FILE%
 %ZIP% a -tzip %FILE% GameData
 

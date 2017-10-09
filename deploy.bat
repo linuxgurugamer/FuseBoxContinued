@@ -1,13 +1,16 @@
 
 
-set H=R:\KSP_1.3.0_dev
+@echo off
+
+set H=R:\KSP_1.3.1_dev
+set GAMEDIR=FuseBoxContinued
+set VERSIONFILE=FuseBoxContinued
+
 echo %H%
 
+copy /Y "%1%2" "GameData\%GAMEDIR%\Plugins"
+copy /Y %VERSIONFILE%.version GameData\%GAMEDIR%
 
+xcopy /y /s /I GameData\%GAMEDIR% "%H%\GameData\%GAMEDIR%"
 
-copy /Y "Fusebox\bin\Debug\Fusebox.dll" "GameData\Fusebox\Plugins"
-copy /Y Fusebox.version GameData\Fusebox
-
-cd GameData
-mkdir "%H%\GameData\Fusebox"
-xcopy /y /s Fusebox "%H%\GameData\Fusebox"
+pause
