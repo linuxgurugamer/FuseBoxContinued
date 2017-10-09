@@ -118,15 +118,15 @@ namespace Ratzap
         protected static Texture2D FB_TB_posgen;
         protected static Texture2D FB_TB_drain;
         protected static int frmCount = 1;
-        protected string FB_TB_full_P =  "Fusebox/TB_icons/3of3green";
-        protected string FB_TB_pos2b_P =  "Fusebox/TB_icons/2of3green";
-        protected string FB_TB_pos1b_P =  "Fusebox/TB_icons/1of3green";
-        protected string FB_TB_dr3b_P =   "Fusebox/TB_icons/3of3red";
-        protected string FB_TB_dr2b_P =   "Fusebox/TB_icons/2of3red";
-        protected string FB_TB_dr1b_P =   "Fusebox/TB_icons/1of3red";
-        protected string FB_TB_empty_P =  "Fusebox/TB_icons/emptyred";
-        protected string FB_TB_posgen_P = "Fusebox/TB_icons/posgen";
-        protected string FB_TB_drain_P =  "Fusebox/TB_icons/draining";
+        protected string FB_TB_full_P =  "FuseboxContinued/TB_icons/3of3green";
+        protected string FB_TB_pos2b_P = "FuseboxContinued/TB_icons/2of3green";
+        protected string FB_TB_pos1b_P = "FuseboxContinued/TB_icons/1of3green";
+        protected string FB_TB_dr3b_P = "FuseboxContinued/TB_icons/3of3red";
+        protected string FB_TB_dr2b_P = "FuseboxContinued/TB_icons/2of3red";
+        protected string FB_TB_dr1b_P = "FuseboxContinued/TB_icons/1of3red";
+        protected string FB_TB_empty_P = "FuseboxContinued/TB_icons/emptyred";
+        protected string FB_TB_posgen_P = "FuseboxContinued/TB_icons/posgen";
+        protected string FB_TB_drain_P = "FuseboxContinued/TB_icons/draining";
 
         // Darkness calc bits
         public static List<celBody> allBodies = new List<celBody>();
