@@ -3,7 +3,7 @@
 @echo off
 
 set H=R:\KSP_1.3.1_dev
-set GAMEDIR=FuseBoxContinued
+set GAMEDIR=FuseBox
 set VERSIONFILE=FuseBoxContinued
 
 echo %H%
