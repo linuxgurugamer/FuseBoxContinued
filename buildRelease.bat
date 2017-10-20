@@ -3,7 +3,7 @@
 
 rem Set variables here
 
-set GAMEDIR=FuseBox
+set GAMEDIR=FuseBoxContinued
 set VERSIONFILE=FuseBoxContinued
 set LICENSE=LICENSE
 set README=ReadMe.md

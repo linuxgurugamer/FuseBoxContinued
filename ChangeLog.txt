@@ -95,5 +95,11 @@ ChangeLog
 0.1.15.1
 	Fixed missing icons
 
+0.1.15.2
+	Rebuild to fix the installed dir
+
+0.1.15.3
+	Revert last change
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
