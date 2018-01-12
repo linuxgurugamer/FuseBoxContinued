@@ -404,6 +404,7 @@ namespace Ratzap
                     switch (tmpPM.moduleName)
                     {
                         case "ModuleDeployableSolarPanel":
+                        case "KopernicusSolarPanel":
                             if (typeArr[0])
                             {
                                 ModuleDeployableSolarPanel tmpSol = (ModuleDeployableSolarPanel)tmpPM;
