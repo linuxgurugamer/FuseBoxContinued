@@ -58,6 +58,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>R:\KSP_1.3.1_dev\GameData\kOS\Plugins\kOS.dll</HintPath>
     </Reference>
+    <Reference Include="kOS.Safe, Version=1.1.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>R:\KSP_1.3.1_dev\GameData\kOS\Plugins\kOS.Safe.dll</HintPath>
+    </Reference>
     <Reference Include="KSPWheel, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>R:\KSP_1.3.1_dev\GameData\KSPWheel\Plugin\KSPWheel.dll</HintPath>
