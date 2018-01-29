@@ -101,5 +101,8 @@ ChangeLog
 0.1.15.3
 	Revert last change
 
+0.1.15.4
+	Added KopernicuSolarPanel
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
