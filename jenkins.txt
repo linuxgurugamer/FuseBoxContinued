@@ -27,7 +27,7 @@
 1:FuseboxContinued, FuseBoxContinued.version
 
 # 2:PROJNAME, PROJFILE, VERSIONFILE, PLUGINSFOLDER
-2:FuseBoxContinued,FuseBoxContinued/Fusebox.csproj,FuseBoxContinued.version,GameData/FuseboxContinued/Plugins
+2:FuseBoxContinued,Fusebox/Fusebox.csproj,FuseBoxContinued.version,GameData/FuseboxContinued/Plugins
 
 # 3:SOURCEFILE, DESTDIR
 3:FuseBoxContinued.version,GameData/FuseboxContinued
