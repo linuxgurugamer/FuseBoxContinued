@@ -103,6 +103,7 @@ ChangeLog
 
 0.1.15.4
 	Added KopernicuSolarPanel
+	Added Jenkins config
 
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
