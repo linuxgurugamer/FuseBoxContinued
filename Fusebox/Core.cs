@@ -1054,7 +1054,7 @@ namespace Ratzap
                         {
                             if (r.id == definition.id)
                             {
-                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow())))
+                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow)))
                                     am_use += r.rate;
                             }
                         }
@@ -1068,7 +1068,7 @@ namespace Ratzap
                         {
                             if (r.id == definition.id)
                             {
-                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow())))
+                                if ((mode == DisplayMode.editor) || (mode == DisplayMode.inFlight && (r.rate > 0.0 && tmpSS.scanningNow)))
                                     am_use += r.rate;
                             }
                         }

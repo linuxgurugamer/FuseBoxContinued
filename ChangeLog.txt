@@ -104,6 +104,7 @@ ChangeLog
 0.1.15.4
 	Added KopernicuSolarPanel
 	Added Jenkins config
+	Updated scansat call to scanningNow 
 
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
