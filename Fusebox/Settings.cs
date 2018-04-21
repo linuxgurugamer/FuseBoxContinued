@@ -24,9 +24,10 @@ namespace Ratzap
         public override int SectionOrder { get { return 1; } }
         public override bool HasPresets { get { return true; } }
 
+#if false
         [GameParameters.CustomParameterUI("Use Blizzy Toolbar if available")]
         public bool blizzy = false;
-
+#endif
 
         public override void SetDifficultyPreset(GameParameters.Preset preset)
         {

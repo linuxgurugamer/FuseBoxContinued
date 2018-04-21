@@ -8,6 +8,8 @@ using System.Reflection;
 using KSP.UI.Screens;
 using TrackResource;
 
+using ClickThroughFix;
+
 namespace Ratzap
 {
     partial class FuseBox_Core : MonoBehaviour
@@ -71,17 +73,17 @@ namespace Ratzap
 
                 if (am_max > 0)
                 {
-                    mainWin = GUILayout.Window(MAINWINID, mainWin, drawFusebox, "Fusebox", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                    mainWin = ClickThruBlocker.GUILayoutWindow(MAINWINID, mainWin, drawFusebox, "Fusebox", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
                     if (showFilters)
-                        filterWin = GUILayout.Window(FILTWINID, filterWin, drawFilters, "Filters", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                        filterWin = ClickThruBlocker.GUILayoutWindow(FILTWINID, filterWin, drawFilters, "Filters", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
                     if (showSettings)
-                        setWin = GUILayout.Window(SETWINID, setWin, drawSettings, "Settings", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                        setWin = ClickThruBlocker.GUILayoutWindow(SETWINID, setWin, drawSettings, "Settings", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
                     if (showDarkTime)
                     {
-                        drkWin = GUILayout.Window(DRKWINID, drkWin, drawDark, "Darkness Time", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                        drkWin = ClickThruBlocker.GUILayoutWindow(DRKWINID, drkWin, drawDark, "Darkness Time", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
                         if (pickBod)
                         {
                             GUIStyle listStyle = new GUIStyle(GUI.skin.label);

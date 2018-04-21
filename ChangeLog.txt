@@ -107,5 +107,11 @@ ChangeLog
 	Updated all references to 1.3.1 dlls
 	Updated scansat call to scanningNow 
 
+0.1.16
+	Updated for 1.4.1
+	Added support for the Clickthrough Blocker
+	Added support for the Toolbar Controller
+	Removed support for SSTU (until SSTU is released for 1.4)
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge

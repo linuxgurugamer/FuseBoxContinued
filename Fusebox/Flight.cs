@@ -8,6 +8,8 @@ using System.Reflection;
 using KSP.UI.Screens;
 using TrackResource;
 
+using ClickThroughFix;
+
 // Ratzap, 09/09/13
 
 namespace Ratzap
@@ -89,7 +91,7 @@ namespace Ratzap
             }
             if (showWarn)
             {
-                warnWin = GUILayout.Window(WARWINID, warnWin, stopAndWarn, "WARNING!", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                warnWin = ClickThruBlocker.GUILayoutWindow(WARWINID, warnWin, stopAndWarn, "WARNING!", GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             }
             else
             {

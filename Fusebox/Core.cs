@@ -8,6 +8,8 @@ using System.Reflection;
 using KSP.UI.Screens;
 using TrackResource;
 
+using ToolbarControl_NS;
+
 namespace Ratzap
 {
     public partial class FuseBox_Core : MonoBehaviour
@@ -57,8 +59,9 @@ namespace Ratzap
         protected static bool TACLPresent = false;
         protected static bool kOSPresent = false;
         protected static bool DeepFreezePresent = false;
+#if SSTU
         protected static bool SSTUToolsPresent = false;
-
+#endif
         //		protected static bool BioPresent = false;
         protected static bool AntRPresent = false;
         //		protected static bool KarPresent = false;
@@ -106,8 +109,12 @@ namespace Ratzap
         protected static Color OtherCol = Color.white;
 
         // Toolbar stuff, cribbed from VOID
+#if false
         protected static ApplicationLauncherButton appLauncherButton;
         protected static IButton ToolbarButton;
+#endif
+        ToolbarControl toolbarControl;
+
         protected static Texture2D FB_TB_full;
         protected static Texture2D FB_TB_pos2b;
         protected static Texture2D FB_TB_pos1b;
@@ -180,7 +187,9 @@ namespace Ratzap
                 kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
                 DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
                 KSPWheelPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KSPWheel");
+#if SSTU
                 SSTUToolsPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SSTUTools");
+#endif
 
                 //			BDSMPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "BTSM");
 
@@ -252,6 +261,7 @@ namespace Ratzap
         protected void CreateLauncher()
         {
             Log.Info("CreateLauncher");
+#if false
             FB_TB_posgen = GameDatabase.Instance.GetTexture(FB_TB_posgen_P, false);
             if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
             {
@@ -296,10 +306,31 @@ namespace Ratzap
                     GameDatabase.Instance.GetTexture(FB_TB_posgen_P + "-38", false)
                 );
             }
-        }
+#endif
+            toolbarControl = gameObject.AddComponent<ToolbarControl>();
+            toolbarControl.AddToAllToolbars(OnClick, OnClick,
+                ApplicationLauncher.AppScenes.FLIGHT |
+                    ApplicationLauncher.AppScenes.MAPVIEW |
+                    ApplicationLauncher.AppScenes.SPH |
+                    ApplicationLauncher.AppScenes.VAB,
+                MODID,
+                "fuseBoxButton",
+                FB_TB_posgen_P + "-38",
+                FB_TB_posgen_P,
+                MODNAME
+            );
 
+        }
+        internal const string MODID = "FuseBox_NS";
+        internal const string MODNAME = "FuseBox";
+
+        void OnClick()
+        {
+            uiActive = !uiActive;
+        }
         protected void DestroyLauncher(GameScenes gs)
         {
+#if false
             if (appLauncherButton != null)
             {
                 ApplicationLauncher.Instance.RemoveModApplication(appLauncherButton);
@@ -311,6 +342,9 @@ namespace Ratzap
                 ToolbarButton.Destroy();
                 ToolbarButton = null;
             }
+#endif
+            toolbarControl.OnDestroy();
+            Destroy(toolbarControl);
         }
 
 
@@ -781,6 +815,7 @@ namespace Ratzap
                             Debug.Log("FB - Wrong KSPWheelPresent library version - disabled.");
                             KSPWheelPresent = false;
                         }
+#if SSTU
                     if (SSTUToolsPresent)
                         try
                         {
@@ -824,6 +859,7 @@ namespace Ratzap
                                                 Debug.Log("FB - Wrong BTSM library version - disabled.");
                                                 BDSMPresent = false;
                                             } */
+#endif
                 }
             }
 
@@ -928,7 +964,7 @@ namespace Ratzap
                         am_cur += r.amount;
                     }
 
-#endif              
+#endif
 
 
                 case "FissionGenerator":
@@ -1192,7 +1228,7 @@ namespace Ratzap
             }
         }
 
-        
+#if SSTU
         protected void checkSSTUTools(PartModule tmpPM)
         {
 
@@ -1217,7 +1253,7 @@ namespace Ratzap
                     
             }
         }
-
+#endif
         /*		protected void checkBio(PartModule tmpPM)
                 {
                     switch (tmpPM.moduleName)
@@ -1480,6 +1516,7 @@ namespace Ratzap
             }
             if (newIconName != "")
             {
+#if false
                 if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
                     ToolbarButton.TexturePath = newIconName;
                 else
@@ -1487,6 +1524,8 @@ namespace Ratzap
                     if (appLauncherButton != null)
                         appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName + "-38", false));
                 }
+#endif
+                toolbarControl.SetTexture(newIconName + "-38", newIconName);
             }
         }
 

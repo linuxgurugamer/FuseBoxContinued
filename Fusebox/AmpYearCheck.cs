@@ -6,6 +6,8 @@ using System.Linq;
 using System.Reflection;
 using KSP.UI.Screens;
 
+using ClickThroughFix;
+
 namespace Ratzap
 {
     [KSPAddon(KSPAddon.Startup.MainMenu, true)]
@@ -53,7 +55,7 @@ namespace Ratzap
         {
             GUI.color = Color.grey;
             if (ampYearDetected)
-                ampYearWin = GUILayout.Window(ampYearWINID, ampYearWin, drawAmpyearbox, "Fusebox", window);
+                ampYearWin = ClickThruBlocker.GUILayoutWindow(ampYearWINID, ampYearWin, drawAmpyearbox, "Fusebox", window);
         }
 
         void drawHLine(string s)
