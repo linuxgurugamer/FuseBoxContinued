@@ -40,7 +40,7 @@
     </Reference>
     <Reference Include="AviationLights, Version=3.14.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>R:\KSP_1.3.1_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
+      <HintPath>R:\KSP_1.4.1_dev\GameData\AviationLights\Plugins\AviationLights.dll</HintPath>
     </Reference>
     <Reference Include="ClickThroughBlocker">
       <HintPath>R:\KSP_1.4.1_dev\GameData\ClickThroughBlocker\Plugins\ClickThroughBlocker.dll</HintPath>
