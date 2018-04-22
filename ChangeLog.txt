@@ -113,5 +113,8 @@ ChangeLog
 	Added support for the Toolbar Controller
 	Removed support for SSTU (until SSTU is released for 1.4)
 
+0.1.16.1
+	Fixed nullref after 1st time shown
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge

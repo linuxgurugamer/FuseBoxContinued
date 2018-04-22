@@ -113,8 +113,9 @@ namespace Ratzap
         protected static ApplicationLauncherButton appLauncherButton;
         protected static IButton ToolbarButton;
 #endif
-        ToolbarControl toolbarControl;
+        static ToolbarControl toolbarControl;
 
+#if false
         protected static Texture2D FB_TB_full;
         protected static Texture2D FB_TB_pos2b;
         protected static Texture2D FB_TB_pos1b;
@@ -124,6 +125,8 @@ namespace Ratzap
         protected static Texture2D FB_TB_empty;
         protected static Texture2D FB_TB_posgen;
         protected static Texture2D FB_TB_drain;
+#endif
+
         protected static int frmCount = 1;
         protected string FB_TB_full_P =  "FuseboxContinued/TB_icons/3of3green";
         protected string FB_TB_pos2b_P = "FuseboxContinued/TB_icons/2of3green";
@@ -151,7 +154,7 @@ namespace Ratzap
 
         public void Awake()
         {
-            GameEvents.onGUIApplicationLauncherUnreadifying.Add(DestroyLauncher);
+           // GameEvents.onGUIApplicationLauncherUnreadifying.Add(DestroyLauncher);
         }
 
         static bool initted = false;
@@ -241,12 +244,12 @@ namespace Ratzap
                     pickedBodIdx = allBodNames.IndexOf(pickedBod);
                 }
 
-                GameEvents.onGUIApplicationLauncherReady.Add(CreateLauncher);
+          
                 definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
                 if (NFEPresent)
                     storedChargeDefinition = PartResourceLibrary.Instance.GetDefinition("StoredCharge");
             }
-            
+            CreateLauncher();
             //Hide/show UI event addition
             GameEvents.onHideUI.Add(HideUI);
             GameEvents.onShowUI.Add(ShowUI);
@@ -254,7 +257,7 @@ namespace Ratzap
 
         protected void OnDestroy()
         {
-           // DestroyLauncher();
+           DestroyLauncher();
            // GameEvents.onGUIApplicationLauncherReady.Remove(CreateLauncher);
         }
 
@@ -307,19 +310,21 @@ namespace Ratzap
                 );
             }
 #endif
-            toolbarControl = gameObject.AddComponent<ToolbarControl>();
-            toolbarControl.AddToAllToolbars(OnClick, OnClick,
-                ApplicationLauncher.AppScenes.FLIGHT |
-                    ApplicationLauncher.AppScenes.MAPVIEW |
-                    ApplicationLauncher.AppScenes.SPH |
-                    ApplicationLauncher.AppScenes.VAB,
-                MODID,
-                "fuseBoxButton",
-                FB_TB_posgen_P + "-38",
-                FB_TB_posgen_P,
-                MODNAME
-            );
-
+            if (toolbarControl == null)
+            {
+                toolbarControl = gameObject.AddComponent<ToolbarControl>();
+                toolbarControl.AddToAllToolbars(OnClick, OnClick,
+                    ApplicationLauncher.AppScenes.FLIGHT |
+                        ApplicationLauncher.AppScenes.MAPVIEW |
+                        ApplicationLauncher.AppScenes.SPH |
+                        ApplicationLauncher.AppScenes.VAB,
+                    MODID,
+                    "fuseBoxButton",
+                    FB_TB_posgen_P + "-38",
+                    FB_TB_posgen_P,
+                    MODNAME
+                );
+            }
         }
         internal const string MODID = "FuseBox_NS";
         internal const string MODNAME = "FuseBox";
@@ -328,8 +333,9 @@ namespace Ratzap
         {
             uiActive = !uiActive;
         }
-        protected void DestroyLauncher(GameScenes gs)
+        protected void DestroyLauncher()
         {
+            Log.Info("DestroyLauncher");
 #if false
             if (appLauncherButton != null)
             {
@@ -345,6 +351,7 @@ namespace Ratzap
 #endif
             toolbarControl.OnDestroy();
             Destroy(toolbarControl);
+            toolbarControl = null;
         }
 
 
@@ -1514,7 +1521,10 @@ namespace Ratzap
                     }
                 }
             }
-            if (newIconName != "")
+            Log.Info("setTBIcon 2");
+            if (toolbarControl == null)
+                Log.Info("toolbarControl is null");
+            if (newIconName != "" && toolbarControl != null)
             {
 #if false
                 if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
