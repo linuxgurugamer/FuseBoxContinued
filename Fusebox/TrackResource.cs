@@ -114,17 +114,17 @@ namespace TrackResource
             Reload(FlightGlobals.ActiveVessel);
         }
 
-        void Add(Vessel v)
+        bool Add(Vessel v)
         {
             Log.Info("VesselStatsManager.Add");
             bool b;
             if (v == null)
-                return;
+                return false;
             Log.Info("Add: " + v.name);
             if (moduleFilterList == null)
             {
                 Log.Info("modulefilterList is null");
-                return;
+                return false;
             }
             bool b1 = true, b2 = true;
             if (v.name.Length >= 9)
@@ -158,10 +158,12 @@ namespace TrackResource
                         {
                             Log.Info("Add 2");
                             part.OnRequestResource.Add(r.Sample);
+                            return true;
                         }
                     }
                 }
             }
+            return false;
         }
 
         public void Remove(Vessel v)
@@ -214,8 +216,10 @@ namespace TrackResource
             if (!vesselDict.TryGetValue(v, out result))
             {
                 Log.Info("Adding vessel: " + v.name);
-                Add(v);
-                result = vesselDict[v];
+                if (Add(v))
+                    result = vesselDict[v];
+                else
+                    result = null;
             }
             Log.Info("After TryGetValue");
             return result;

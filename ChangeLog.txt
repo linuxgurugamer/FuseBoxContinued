@@ -116,5 +116,11 @@ ChangeLog
 0.1.16.1
 	Fixed nullref after 1st time shown
 
+0.1.16.2
+	Fixed KeyNotFound exception when switching to a flag
+	Deleted 86 lines of commented out code, used to do to toolbar buttons itself
+	deleted ToolbarWrapper.cs (796 lines of code)
+
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge

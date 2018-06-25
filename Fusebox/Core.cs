@@ -108,24 +108,8 @@ namespace Ratzap
         protected static Color BadCol = Color.red;
         protected static Color OtherCol = Color.white;
 
-        // Toolbar stuff, cribbed from VOID
-#if false
-        protected static ApplicationLauncherButton appLauncherButton;
-        protected static IButton ToolbarButton;
-#endif
+ 
         static ToolbarControl toolbarControl;
-
-#if false
-        protected static Texture2D FB_TB_full;
-        protected static Texture2D FB_TB_pos2b;
-        protected static Texture2D FB_TB_pos1b;
-        protected static Texture2D FB_TB_dr3b;
-        protected static Texture2D FB_TB_dr2b;
-        protected static Texture2D FB_TB_dr1b;
-        protected static Texture2D FB_TB_empty;
-        protected static Texture2D FB_TB_posgen;
-        protected static Texture2D FB_TB_drain;
-#endif
 
         protected static int frmCount = 1;
         protected string FB_TB_full_P =  "FuseboxContinued/TB_icons/3of3green";
@@ -264,52 +248,7 @@ namespace Ratzap
         protected void CreateLauncher()
         {
             Log.Info("CreateLauncher");
-#if false
-            FB_TB_posgen = GameDatabase.Instance.GetTexture(FB_TB_posgen_P, false);
-            if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
-            {
-                // Load toolbar icons
-                FB_TB_full = GameDatabase.Instance.GetTexture(FB_TB_full_P, false);
-                FB_TB_pos2b = GameDatabase.Instance.GetTexture(FB_TB_pos2b_P, false);
-                FB_TB_pos1b = GameDatabase.Instance.GetTexture(FB_TB_pos1b_P, false);
-                FB_TB_dr3b = GameDatabase.Instance.GetTexture(FB_TB_dr3b_P, false);
-                FB_TB_dr2b = GameDatabase.Instance.GetTexture(FB_TB_dr2b_P, false);
-                FB_TB_dr1b = GameDatabase.Instance.GetTexture(FB_TB_dr1b_P, false);
-                FB_TB_empty = GameDatabase.Instance.GetTexture(FB_TB_empty_P, false);
-                //				FB_TB_posgen = GameDatabase.Instance.GetTexture (FB_TB_posgen_P, false);
-                FB_TB_drain = GameDatabase.Instance.GetTexture(FB_TB_drain_P, false);
-                // init button, add icons etc
-                ToolbarButton = ToolbarManager.Instance.add(this.GetType().Name, "FBToggle");
-                ToolbarButton.Text = "Fusebox";
-                ToolbarButton.TexturePath = this.FB_TB_full_P;
-                ToolbarButton.Visible = true;
-                ToolbarButton.OnClick += (
-                    (e) => uiActive = !uiActive
-                );
-            }
-            else if (appLauncherButton == null)
-            {
-                appLauncherButton = ApplicationLauncher.Instance.AddModApplication(
-                    delegate
-                    {
-                        uiActive = true;
-                    },
-                    delegate
-                    {
-                        uiActive = false;
-                    },
-                    null,
-                    null,
-                    null,
-                    null,
-                    ApplicationLauncher.AppScenes.FLIGHT |
-                    ApplicationLauncher.AppScenes.MAPVIEW |
-                    ApplicationLauncher.AppScenes.SPH |
-                    ApplicationLauncher.AppScenes.VAB,
-                    GameDatabase.Instance.GetTexture(FB_TB_posgen_P + "-38", false)
-                );
-            }
-#endif
+
             if (toolbarControl == null)
             {
                 toolbarControl = gameObject.AddComponent<ToolbarControl>();
@@ -336,19 +275,7 @@ namespace Ratzap
         protected void DestroyLauncher()
         {
             Log.Info("DestroyLauncher");
-#if false
-            if (appLauncherButton != null)
-            {
-                ApplicationLauncher.Instance.RemoveModApplication(appLauncherButton);
-                appLauncherButton = null;
-            }
 
-            if (ToolbarButton != null && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
-            {
-                ToolbarButton.Destroy();
-                ToolbarButton = null;
-            }
-#endif
             toolbarControl.OnDestroy();
             Destroy(toolbarControl);
             toolbarControl = null;
@@ -1526,15 +1453,6 @@ namespace Ratzap
                 Log.Info("toolbarControl is null");
             if (newIconName != "" && toolbarControl != null)
             {
-#if false
-                if (ToolbarManager.ToolbarAvailable && HighLogic.CurrentGame.Parameters.CustomParams<Fusebox>().blizzy)
-                    ToolbarButton.TexturePath = newIconName;
-                else
-                {
-                    if (appLauncherButton != null)
-                        appLauncherButton.SetTexture(GameDatabase.Instance.GetTexture(newIconName + "-38", false));
-                }
-#endif
                 toolbarControl.SetTexture(newIconName + "-38", newIconName);
             }
         }
