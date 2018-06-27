@@ -16,6 +16,7 @@ namespace Ratzap
 
     public class PartTapIn : Part
     {
+#if true
         //
         // The following is here because it is a private function in the Part class
         // and therefore is not being activated or called
@@ -29,9 +30,9 @@ namespace Ratzap
                 return;
 
             InputLockManager.SetControlLock("vesselRenameDialog");
-            renameDialog = VesselRenameDialog.SpawnNameFromPart(this, onVesselNamingAccept, onVesselNamingDismiss, onVesselNamingRemove, true, VesselType.Debris);
+            renameDialog = VesselRenameDialog.SpawnNameFromPart(this, myonVesselNamingAccept, myonVesselNamingDismiss, myonVesselNamingRemove, true, VesselType.Debris);
         }
-        void onVesselNamingAccept(string newVesselName, VesselType newVesselType, int newPriority)
+        void myonVesselNamingAccept(string newVesselName, VesselType newVesselType, int newPriority)
         {
             if (!Vessel.IsValidVesselName(newVesselName))
                 return;
@@ -42,34 +43,45 @@ namespace Ratzap
             vesselNaming.vesselType = newVesselType;
             vesselNaming.namingPriority = newPriority;
             GameEvents.onPartVesselNamingChanged.Fire(this);
-            onVesselNamingDismiss();
+            myonVesselNamingDismiss();
         }
-        void onVesselNamingDismiss()
+        void myonVesselNamingDismiss()
         {
             InputLockManager.RemoveControlLock("vesselRenameDialog");
         }
-        void onVesselNamingRemove()
+        void myonVesselNamingRemove()
         {
             vesselNaming = null;
         }
-// End of code for vessel naming
-
-        void Start()
+#if true
+        //
+        // For some reason, Start() causes Kerbalism to spam the log with errors
+        // So using LateUpdate is a compromise
+        // This bug will be fixed in the next release of KSP, so restrict this only to 1.4.3
+        //
+        public new void LateUpdate()
         {
-            Log.Info("PartReplacement.Start");
-            if (HighLogic.LoadedSceneIsEditor)
+            if (Versioning.version_major == 1 && Versioning.version_minor == 4 && Versioning.Revision == 3)
             {
-                // In case this gets fixed in the future, don't show my version
-                if (!Events.Contains("SetVesselNaming"))
-                    Events["MySetVesselNaming"].guiActiveEditor = true;
-            }
-            else
-            {
-                if (GameSettings.SHOW_VESSEL_NAMING_IN_FLIGHT && !Events.Contains("SetVesselNaming"))
-                    Events["MySetVesselNaming"].guiActiveUncommand = true;
+                Log.Info("PartReplacement.LateUpdate");
+                if (HighLogic.LoadedSceneIsEditor)
+                {
+                    // In case this gets fixed in the future, don't show my version
+                    if (!Events.Contains("SetVesselNaming"))
+                        Events["MySetVesselNaming"].guiActiveEditor = true;
+                }
+                else
+                {
+                    if (GameSettings.SHOW_VESSEL_NAMING_IN_FLIGHT && !Events.Contains("SetVesselNaming"))
+                        Events["MySetVesselNaming"].guiActiveUncommand = true;
+                }
             }
         }
 
+        // End of code for vessel naming
+
+#endif
+#endif
         public PartTapIn()
         {
             OnRequestResource = new PartEventTypes.Ev4Arg<string, double, ResourceFlowMode, double>();

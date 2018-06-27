@@ -124,5 +124,9 @@ ChangeLog
 0.1.16.3
 	Added event to replace hidden vessel naming event.  This is a workaround for a KSP bug, which will be fixed in the next release
 
+0.1.16.4
+	Fixed issue with Kerbalism spamming log with nullrefs
+	Added code to restrict workaround for the vesselnaming to 1.4.3 only
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
