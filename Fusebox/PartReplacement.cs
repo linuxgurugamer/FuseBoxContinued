@@ -67,12 +67,12 @@ namespace Ratzap
                 if (HighLogic.LoadedSceneIsEditor)
                 {
                     // In case this gets fixed in the future, don't show my version
-                    if (!Events.Contains("SetVesselNaming"))
+                    if (!Events.Contains("SetVesselNaming") && this.Modules.Contains("ModuleCommand"))
                         Events["MySetVesselNaming"].guiActiveEditor = true;
                 }
                 else
                 {
-                    if (GameSettings.SHOW_VESSEL_NAMING_IN_FLIGHT && !Events.Contains("SetVesselNaming"))
+                    if (GameSettings.SHOW_VESSEL_NAMING_IN_FLIGHT && !Events.Contains("SetVesselNaming") && this.Modules.Contains("ModuleCommand"))
                         Events["MySetVesselNaming"].guiActiveUncommand = true;
                 }
             }

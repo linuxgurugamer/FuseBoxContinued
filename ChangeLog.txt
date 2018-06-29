@@ -128,5 +128,8 @@ ChangeLog
 	Fixed issue with Kerbalism spamming log with nullrefs
 	Added code to restrict workaround for the vesselnaming to 1.4.3 only
 
+0.1.16.5
+	Fixed Configure Vessel Naming to only be shown on parts with ModuleCommand
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
