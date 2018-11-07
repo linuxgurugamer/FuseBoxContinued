@@ -131,5 +131,8 @@ ChangeLog
 0.1.16.5
 	Fixed Configure Vessel Naming to only be shown on parts with ModuleCommand
 
+0.1.16.6
+	Version bump for 1.5 rebuild
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
