@@ -18,9 +18,9 @@ namespace TrackResource
     [KSPAddon(KSPAddon.Startup.Flight, true)]
     public class VesselStatsManager : MonoBehaviour
     {
-        private static Dictionary<Vessel, ResourceStats> vesselDict = new Dictionary<Vessel, ResourceStats>();
+        private static Dictionary<Vessel, ResourceStats> vesselDict;
         public static VesselStatsManager Instance;
-        public static HashSet<string> moduleFilterList = new HashSet<string>();
+        public static HashSet<string> moduleFilterList;
 
         public VesselStatsManager()
         {
@@ -42,22 +42,29 @@ namespace TrackResource
             GameEvents.onVesselCreate.Add(OnVesselCreate);
             GameEvents.onVesselDestroy.Add(onVesselDestroy);
             GameEvents.onVesselRecovered.Add(onVesselRecovered);
+
+            vesselDict = new Dictionary<Vessel, ResourceStats>();
+            moduleFilterList = new HashSet<string>();
             DontDestroyOnLoad(this);
         }
+
         private void OnVesselRollout(ShipConstruct sc)
         {
             Log.Info("OnVesselRollout");
         }
+
         private void OnVesselGoOffRails(Vessel newvessel)
         {
             Log.Info("OnVesselGoOffRails");
             Add(newvessel);
         }
+
         private void OnVesselChange(Vessel newvessel)
         {
             Log.Info("OnVesselChange");
             Add(newvessel);
         }
+
         private void OnVesselLoad(Vessel newvessel)
         {
             Log.Info("OnVesselLoad");
@@ -69,11 +76,13 @@ namespace TrackResource
             Log.Info("OnVesselCreate");
             Add(Vessel);
         }
+
         private void onVesselDestroy(Vessel vessel)
         {
             Log.Info("onVesselDestroy");
             Remove(vessel);
         }
+
         private void onVesselRecovered(ProtoVessel vessel, bool quick)
         {
             Log.Info("OnVesselRecovered");
@@ -126,14 +135,16 @@ namespace TrackResource
                 Log.Info("modulefilterList is null");
                 return false;
             }
-            bool b1 = true, b2 = true;
+            bool b1 = true, b2 = true, b3 = true;
             if (v.name.Length >= 9)
-                b1 = (v.name.Substring(0, 9) != "kerbalEVA");
+                b1 = (v.name.Substring(0, 9) != "kerbalEVA" && v.name.Substring(0, 9) != "femaleEVA");
+            if (v.name.Length >= 7)
+                b3 = (v.name.Substring(0, 7) != "maleEVA");
             if (v.name.Length >= 4)
                 b2 = (v.name.Substring(0, 4) != "flag");
             //if ((v.name.Length >= 9 && v.name.Substring(0, 9) != "kerbalEVA") && (v.name.Length >= 4 && v.name.Substring(0, 4) != "flag") || 
             //    v.name.Length < 4)
-            if (b1 && b2)
+            if (b1 && b2 && b3)
             {
 
                 Log.Info("ModuleFilterList.count: " + moduleFilterList.Count().ToString());
@@ -141,7 +152,10 @@ namespace TrackResource
                 {
                     ResourceStats r = VesselStatsManager.Instance.gameObject.AddComponent<ResourceStats>();
                     if (r == null)
+                    {
                         Log.Info("r == null");
+                        return false;
+                    }
                     vesselDict.Add(v, r);
                     foreach (PartTapIn part in v.Parts)
                     {

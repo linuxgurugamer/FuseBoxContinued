@@ -29,30 +29,15 @@ namespace Ratzap
         {
 
             // Make sure the windows  aren't dragged off screen
-            if (mainWin.x < 0)
-                mainWin.x = 0;
-            if (mainWin.y < 0)
-                mainWin.y = 0;
-            if (mainWin.x > Screen.width - mainWidth)
-                mainWin.x = Screen.width - mainWidth;
-            if (mainWin.y > Screen.height - mainHeight)
-                mainWin.y = Screen.height - mainHeight;
-            if (filterWin.x < 0)
-                filterWin.x = 0;
-            if (filterWin.y < 0)
-                filterWin.y = 0;
-            if (filterWin.x > Screen.width - filtWidth)
-                filterWin.x = Screen.width - filtWidth;
-            if (filterWin.y > Screen.height - filtHeight)
-                filterWin.y = Screen.height - filtHeight;
-            if (setWin.x < 0)
-                setWin.x = 0;
-            if (setWin.y < 0)
-                setWin.y = 0;
-            if (setWin.x > Screen.width - setWidth)
-                setWin.x = Screen.width - setWidth;
-            if (setWin.y > Screen.height - setHeight)
-                setWin.y = Screen.height - setHeight;
+            mainWin.x = Math.Min(Math.Max(mainWin.x, 0), Screen.width - mainWidth);
+            mainWin.y = Math.Min(Math.Max(mainWin.y, 0), Screen.height - mainHeight);
+
+            filterWin.x = Math.Min(Math.Max(filterWin.x, 0), Screen.width - mainWidth);
+            filterWin.y = Math.Min(Math.Max(filterWin.y, 0), Screen.height - mainHeight);
+
+            setWin.x = Math.Min(Math.Max(setWin.x, 0), Screen.width - mainWidth);
+            setWin.y = Math.Min(Math.Max(setWin.y, 0), Screen.height - mainHeight);
+
             // check if win needs to shrink
             if (shrinkMain)
             {
