@@ -138,5 +138,8 @@ ChangeLog
 	In TrackResource, moved initializion of vars into the Start() method
 	Fixed exception caused when kerbals going on eva
 
+0.1.16.9
+	Version bump for KSP 1.7.3
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
