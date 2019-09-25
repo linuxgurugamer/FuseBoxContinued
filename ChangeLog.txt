@@ -140,6 +140,10 @@ ChangeLog
 
 0.1.16.9
 	Version bump for KSP 1.7.3
+	Added InstallChecker
+
+0.1.16.10
+	Updated AssemblyVersion.tt
 
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
