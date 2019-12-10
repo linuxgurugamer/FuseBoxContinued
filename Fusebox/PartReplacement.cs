@@ -97,12 +97,14 @@ namespace Ratzap
         //public PartEventTypes.SingleCallBack3Arg<double, string, double, ResourceFlowMode> OnResourceRequested;
 
         // Request Resource Funnel
+        [Obsolete]
         public override float RequestResource(int resourceID, float demand)
         {
             return (float)RequestResource(resourceID, (double)demand);
             // Recast's Float, sends Int
         }
 
+        [Obsolete]
         public override float RequestResource(string resourceName, float demand)
         {
             return (float)RequestResource(resourceName, (double)demand);

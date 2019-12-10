@@ -258,15 +258,24 @@ namespace Ratzap
                 typeArr[16] = GUILayout.Toggle(typeArr[16], "KAS", typeArr[16] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
             if (DeepFreezePresent)
-            	typeArr[17] = GUILayout.Toggle(typeArr[17], "Deep Freeze", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+            	typeArr[17] = GUILayout.Toggle(typeArr[17], "Deep Freeze", typeArr[17] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
 
             //			if (KarPresent)
             //				typeArr[18] = GUILayout.Toggle(typeArr[18], "Karbonite", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
             if (KSPWheelPresent)
-                typeArr[19] = GUILayout.Toggle(typeArr[19], "Repulsors", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+                typeArr[19] = GUILayout.Toggle(typeArr[19], "Repulsors", typeArr[19] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+
+            if (KSPWheelPresent)
+                typeArr[20] = GUILayout.Toggle(typeArr[20], "Universal Storage II", typeArr[20] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+           // if (KSPWheelPresent)
+           //     typeArr[21] = GUILayout.Toggle(typeArr[21], "Repulsors", typeArr[18] ? filterOn : filterOff, GUILayout.ExpandWidth(true), GUILayout.ExpandHeight(true));
+
+
 
             bool b = false;
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 22; i++)
                 if (typeArr[i] != typeArrCopy[i])
                 {
                     b = true;

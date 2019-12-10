@@ -1,0 +1,25 @@
+{
+  "NAME": "FuseBoxContinued",
+  "URL": "http://ksp.spacetux.net/avc/FuseBoxContinued",
+  "DOWNLOAD": "http://spacedock.info/mod/613/FuseBoxContinued",
+  "GITHUB": {
+    "USERNAME": "linuxgurugamer",
+    "REPOSITORY": "FuseBoxContinued"
+  },
+  "VERSION": {
+    "MAJOR": 0,
+    "MINOR": 1,
+    "PATCH": 16,
+    "BUILD": 10
+  },
+  "KSP_VERSION": {
+    "MAJOR": 1,
+    "MINOR": 5,
+    "PATCH": 1
+  },
+  "KSP_VERSION_MIN": {
+    "MAJOR": 1,
+    "MINOR": 5,
+    "PATCH": 1
+  }
+}

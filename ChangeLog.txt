@@ -145,5 +145,9 @@ ChangeLog
 0.1.16.10
 	Updated AssemblyVersion.tt
 
+0.1.17
+	Added InstallChecker
+	Updated for KSP 1.8
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge

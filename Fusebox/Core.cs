@@ -59,6 +59,8 @@ namespace Ratzap
         protected static bool TACLPresent = false;
         protected static bool kOSPresent = false;
         protected static bool DeepFreezePresent = false;
+
+        protected static bool UniversalStorage2Present = false;
 #if SSTU
         protected static bool SSTUToolsPresent = false;
 #endif
@@ -75,7 +77,7 @@ namespace Ratzap
         //		protected static bool skinChange = false;
         protected static bool showCharge = true;
 
-        protected static bool[] typeArr = new bool[20];
+        protected static bool[] typeArr = new bool[22];
 
         public enum  DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
         protected static DisplayMode mode = DisplayMode.none;
@@ -174,6 +176,10 @@ namespace Ratzap
                 kOSPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "kOS");
                 DeepFreezePresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "DeepFreeze");
                 KSPWheelPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "KSPWheel");
+
+                UniversalStorage2Present = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "UniversalStorage2");
+                Log.Info("UniversalStorage2Present: " + UniversalStorage2Present);
+                 
 #if SSTU
                 SSTUToolsPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SSTUTools");
 #endif
@@ -749,6 +755,18 @@ namespace Ratzap
                             Debug.Log("FB - Wrong KSPWheelPresent library version - disabled.");
                             KSPWheelPresent = false;
                         }
+#if false
+                    if (UniversalStorage2Present)
+                        try
+                        {
+                            checkUniversalStorage2(tmpPM);
+                        }
+                        catch
+                        {
+                            Log.Info("FB - Wrong UniversalStorage 2 library version - disabled.");
+                            UniversalStorage2Present = false;
+                        }
+#endif
 #if SSTU
                     if (SSTUToolsPresent)
                         try
@@ -1122,6 +1140,28 @@ namespace Ratzap
                     break;
             }
         }
+
+
+#if false
+        protected void checkUniversalStorage2(PartModule tmpPM)
+        {
+                   switch (tmpPM.moduleName)
+            {
+                case "USSolarSwitch":
+                    if (typeArr[20])
+                    {
+                        UniversalStorage2.USSolarSwitch tmpUSSolarSwitch = (UniversalStorage2.USSolarSwitch)tmpPM;
+
+                        if (mode == DisplayMode.inFlight && tmpUSSolarSwitch.IsDeployed && tmpUSSolarSwitch.isActiveAndEnabled)
+                            am_prod += tmpUSSolarSwitch.EnergyFlow;
+                        else if (mode == DisplayMode.editor)
+                            am_prod += double.Parse(tmpUSSolarSwitch.chargeRate);
+                    }
+                    break;
+            }
+        }
+#endif
+
         protected void checkKSPWheel(PartModule tmpPM)
         {
             switch (tmpPM.moduleName)
@@ -1528,14 +1568,14 @@ namespace Ratzap
             bool done = false;
             switch (Event.current.GetTypeForControl(controlID))
             {
-                case EventType.mouseDown:
+                case EventType.MouseDown:
                     if (position.Contains(Event.current.mousePosition))
                     {
                         GUIUtility.hotControl = controlID;
                         showList = true;
                     }
                     break;
-                case EventType.mouseUp:
+                case EventType.MouseUp:
                     if (showList)
                     {
                         done = true;
