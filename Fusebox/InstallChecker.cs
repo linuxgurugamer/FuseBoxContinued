@@ -42,7 +42,7 @@ namespace Ratzap
     internal class InstallChecker : MonoBehaviour
     {
         private const string MODNAME = "FuseBox Continued";
-        private const string FOLDERNAME = "FuseBoxContinued";
+        private const string FOLDERNAME = "FuseboxContinued";
         private const string EXPECTEDPATH = FOLDERNAME + "/Plugins";
 
         protected void Start()
