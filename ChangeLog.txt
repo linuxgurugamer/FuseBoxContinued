@@ -149,5 +149,9 @@ ChangeLog
 	Added InstallChecker
 	Updated for KSP 1.8
 
+0.1.17.1
+	Thanks to github user @aAstronaunts for this:
+		Fixed typo in foldername,causing InstallChecker to think it was incorrectly installed
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
