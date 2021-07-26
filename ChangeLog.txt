@@ -152,6 +152,10 @@ ChangeLog
 0.1.17.1
 	Thanks to github user @aAstronaunts for this:
 		Fixed typo in foldername,causing InstallChecker to think it was incorrectly installed
+0.1.17.2
+	Renamed DLL for CKAN compatibility
+	Added AssemblyFileVersion
+	Updated version file for 1.12
 
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
