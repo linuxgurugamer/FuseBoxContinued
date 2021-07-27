@@ -10,6 +10,7 @@ using TrackResource;
 
 using ToolbarControl_NS;
 
+
 namespace Ratzap
 {
     public partial class FuseBox_Core : MonoBehaviour
@@ -639,6 +640,7 @@ namespace Ratzap
                             Debug.Log("FB - Wrong Aviation Lights library version - disabled.");
                             ALPresent = false;
                         }
+#if false
                     if (SLPresent)
                         try
                         {
@@ -659,6 +661,7 @@ namespace Ratzap
                             Debug.Log("FB - Wrong KAS library version - disabled.");
                             KASPresent = false;
                         }
+#endif
 
                     if (NFEPresent)
                         try
@@ -849,6 +852,7 @@ namespace Ratzap
             }
         }
 
+#if false
         protected void checkSv(PartModule tmpPM)
         {
             switch (tmpPM.moduleName)
@@ -881,6 +885,7 @@ namespace Ratzap
                     break;
             }
         }
+#endif
 
         protected void checkNFE(PartModule tmpPM)
         {
@@ -987,6 +992,8 @@ namespace Ratzap
             }
         }
 
+#if false
+
         protected void checkKAS(PartModule tmpPM)
         {
             switch (tmpPM.moduleName)
@@ -1011,6 +1018,7 @@ namespace Ratzap
                     break;
             }
         }
+#endif
 
         protected void checkRT2(PartModule tmpPM)
         {
