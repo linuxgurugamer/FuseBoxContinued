@@ -248,8 +248,9 @@ namespace Ratzap
 
         protected void OnDestroy()
         {
-           DestroyLauncher();
-           // GameEvents.onGUIApplicationLauncherReady.Remove(CreateLauncher);
+           //DestroyLauncher();
+            GameEvents.onHideUI.Remove(HideUI);
+            GameEvents.onShowUI.Remove(ShowUI);
         }
 
         protected void CreateLauncher()
@@ -279,6 +280,8 @@ namespace Ratzap
         {
             uiActive = !uiActive;
         }
+
+#if false
         protected void DestroyLauncher()
         {
             Log.Info("DestroyLauncher");
@@ -287,7 +290,7 @@ namespace Ratzap
             Destroy(toolbarControl);
             toolbarControl = null;
         }
-
+#endif
 
         //Event when the UI is hidden (F2)
         protected void HideUI()

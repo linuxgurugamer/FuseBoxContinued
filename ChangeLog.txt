@@ -158,5 +158,9 @@ ChangeLog
 	Updated version file for 1.12
 	Removed code for depreciated modules in KAS and Surface/Aviation lights
 
+0.1.17.3 
+	Fixed small memory leak
+	Stopped destroying the toolbarController when leaving scene
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
