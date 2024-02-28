@@ -383,6 +383,8 @@ namespace Ratzap
                     {
                         case "ModuleDeployableSolarPanel":
                         case "KopernicusSolarPanel":
+                        case "weatherDrivenSolarPanelStock":
+                        case "weatherDrivenSolarPanelRO":
                             if (typeArr[0])
                             {
                                 ModuleDeployableSolarPanel tmpSol = (ModuleDeployableSolarPanel)tmpPM;
