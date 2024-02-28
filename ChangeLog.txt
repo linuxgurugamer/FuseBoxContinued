@@ -162,5 +162,10 @@ ChangeLog
 	Fixed small memory leak
 	Stopped destroying the toolbarController when leaving scene
 
+0.1.17.4
+	Thanks to github user @Aebestach for this:
+		Add support for weatherDrivenSolarPanel to power calc
+			(needed to support new mod WeatherDrivenSolarPanel)
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
