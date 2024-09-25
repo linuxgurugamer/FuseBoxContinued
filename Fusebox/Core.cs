@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using KSP.IO;
 using UnityEngine;
 using System.Collections;
@@ -80,7 +80,7 @@ namespace Ratzap
 
         protected static bool[] typeArr = new bool[22];
 
-        public enum  DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
+        public enum DisplayMode : int { none = -1, inFlight = 0, editor = 1 };
         protected static DisplayMode mode = DisplayMode.none;
 
         // protected static int mode = -1;  // Display mode, currently  0 for In-Flight, 1 for Editor, -1 to hide
@@ -111,11 +111,11 @@ namespace Ratzap
         protected static Color BadCol = Color.red;
         protected static Color OtherCol = Color.white;
 
- 
+
         static ToolbarControl toolbarControl;
 
         protected static int frmCount = 1;
-        protected string FB_TB_full_P =  "FuseboxContinued/TB_icons/3of3green";
+        protected string FB_TB_full_P = "FuseboxContinued/TB_icons/3of3green";
         protected string FB_TB_pos2b_P = "FuseboxContinued/TB_icons/2of3green";
         protected string FB_TB_pos1b_P = "FuseboxContinued/TB_icons/1of3green";
         protected string FB_TB_dr3b_P = "FuseboxContinued/TB_icons/3of3red";
@@ -141,7 +141,7 @@ namespace Ratzap
 
         public void Awake()
         {
-           // GameEvents.onGUIApplicationLauncherUnreadifying.Add(DestroyLauncher);
+            // GameEvents.onGUIApplicationLauncherUnreadifying.Add(DestroyLauncher);
         }
 
         static bool initted = false;
@@ -180,7 +180,7 @@ namespace Ratzap
 
                 UniversalStorage2Present = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "UniversalStorage2");
                 Log.Info("UniversalStorage2Present: " + UniversalStorage2Present);
-                 
+
 #if SSTU
                 SSTUToolsPresent = AssemblyLoader.loadedAssemblies.Any(a => a.assembly.GetName().Name == "SSTUTools");
 #endif
@@ -235,7 +235,7 @@ namespace Ratzap
                     pickedBodIdx = allBodNames.IndexOf(pickedBod);
                 }
 
-          
+
                 definition = PartResourceLibrary.Instance.GetDefinition("ElectricCharge");
                 if (NFEPresent)
                     storedChargeDefinition = PartResourceLibrary.Instance.GetDefinition("StoredCharge");
@@ -248,7 +248,7 @@ namespace Ratzap
 
         protected void OnDestroy()
         {
-           //DestroyLauncher();
+            //DestroyLauncher();
             GameEvents.onHideUI.Remove(HideUI);
             GameEvents.onShowUI.Remove(ShowUI);
         }
@@ -382,9 +382,6 @@ namespace Ratzap
                     switch (tmpPM.moduleName)
                     {
                         case "ModuleDeployableSolarPanel":
-                        case "KopernicusSolarPanel":
-                        case "weatherDrivenSolarPanelStock":
-                        case "weatherDrivenSolarPanelRO":
                             if (typeArr[0])
                             {
                                 ModuleDeployableSolarPanel tmpSol = (ModuleDeployableSolarPanel)tmpPM;
@@ -392,6 +389,15 @@ namespace Ratzap
                                     am_prod += tmpSol.flowRate;
                                 else
                                     am_prod += tmpSol.chargeRate;
+                            }
+                            break;
+                        case "KopernicusSolarPanel":
+                        case "weatherDrivenSolarPanel":
+                            if (typeArr[0])
+                            {
+                                double results;
+                                double.TryParse(tmpPM.Fields.GetValue("currentOutput").ToString(), out results);
+                                am_prod += results;
                             }
                             break;
                         case "ModuleGenerator":
@@ -902,8 +908,8 @@ namespace Ratzap
                         global::NearFutureElectrical.ModuleRadioisotopeGenerator tmpGen = (global::NearFutureElectrical.ModuleRadioisotopeGenerator)tmpPM;
                         if (mode == DisplayMode.editor)
                             am_prod += tmpGen.BasePower;
-                       else
-                            am_prod += tmpGen.BasePower * (tmpGen.PercentPower / 100);                       
+                        else
+                            am_prod += tmpGen.BasePower * (tmpGen.PercentPower / 100);
                     }
                     break;
 #if false
