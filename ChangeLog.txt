@@ -167,5 +167,9 @@ ChangeLog
 		Add support for weatherDrivenSolarPanel to power calc
 			(needed to support new mod WeatherDrivenSolarPanel)
 
+0.1.17.5
+	Thanks to github user @Aebestach for this:
+		Since KOP has rewritten the working method of solar panels and no longer runs based on MDSP, the original method is no longer applicable, so it is modified
+
 Notes
 KSP-IE is not supported, since it uses something called Megajoule power source, instead of ElectricCharge
